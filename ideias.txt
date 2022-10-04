@@ -1,0 +1,6 @@
+Configurações:
+
+Customizar os ícones.
+Dark e Light mode.
+Mensagens.
+Escrever a jogada.
