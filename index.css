@@ -1,93 +1,157 @@
 * {
-    padding: 0;
-    margin: 0;
-    font-family: 'Montserrat', sans-serif;
+  padding: 0;
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
 }
 
 .logo_container {
-    margin: 0;
-    float: left;
-    width: 95px;
-    height: 68px;
-    margin-left: 20px;
+  margin: 0;
+  float: left;
+  width: 95px;
+  height: 100%;
+  margin-left: 20px;
 }
 
 .logo {
-    width: 100%;
-    height: 100%;
+  width: auto;
+  height: 100%;
 }
 
 .login {
-    float: right;
-    margin-top: 20px;
-    margin-right: 15px;
+  float: right;
+  margin-top: 20px;
+  margin-right: 15px;
 }
 
 .login ul li {
-    list-style: none;
-    display: inline;
-    font-size: 20px;
-    margin-right: 15px;
-    color: rgba(255, 255, 255, 0.813);
+  position: relative;
+  list-style: none;
+  display: inline;
+  font-size: 20px;
+  margin-right: 15px;
+  color: rgba(255, 255, 255, 0.813);
+  animation: 3s color;
+}
+
+.login ul li:hover {
+  color: white;
+  cursor: pointer;
 }
 
 .header {
-    position: relative;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    height: 7vh;
-    background-color: rgba(0, 0, 0, 1);
-    width: 100%;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  display: block;
+  height: 50px;
+  background-color: rgba(0, 0, 0, 1);
+  width: 100%;
 }
 
 .page {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)), url("assets/por_do_sol.jpg");
-    background-size: fill;
-    background-position: center;
-    height: 93vh;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)),
+    url("assets/por_do_sol.jpg");
+  background-size: fill;
+  background-position: center;
+  height: 93vh;
 }
 
 .classification,
 .game_window,
 .misc {
-    border: groove 2px rgb(255, 255, 255);
-    display: inline-block;
-    background-color: none;
-    border-radius: 10px;
+  border: groove 2px rgb(255, 255, 255);
+  display: inline-block;
+  background-color: none;
+  border-radius: 10px;
 }
 
 .classification {
-    width: 18%;
-    margin-right: 50px;
+  width: 18%;
+  margin-right: 50px;
+  margin-left: 50px;
 }
 
 .game_window {
-    width: 50%;
-    margin-right: 50px;
+  width: 50%;
+  margin-right: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .misc {
-    width: 18%;
-    border: none;
+  width: 18%;
+  border: none;
 }
 
 .instructions_commands {
-    border: groove 2px white;
-    height: 65%;
-    border-radius: 10px;
+  border: groove 2px white;
+  height: 65%;
+  border-radius: 10px;
 }
 
 .configurations {
-    height: 30%;
-    margin-bottom: 33px;
-    border: groove 2px white;
-    border-radius: 10px;
+  height: 30%;
+  margin-bottom: 33px;
+  border: groove 2px white;
+  border-radius: 10px;
 }
 
 .main_window {
-    display: flex;
-    padding-top: 30px;
-    height: 92%;
-    margin: 0;
+  display: flex;
+  padding-top: 30px;
+  height: 92%;
+  margin: 0;
 }
+
+.el_fig {
+  width: 20px;
+  height: 480px;
+  background-color: aliceblue;
+  border: 2px yellow solid;
+  border-radius: 10px;
+  box-shadow: inset 0 0 5px #000000;
+  margin: 5px;
+  cursor: pointer;
+  text-align: center;
+  justify-content: center;
+}
+
+.game_window table {
+  margin: auto;
+}
+.game_window td {
+  text-align: center;
+  font-weight: bold;
+  color: white;
+}
+
+#login_form {
+  left: 50%;
+  top: 25%;
+  transform: translate(-50%, 5%);
+  position: fixed;
+  display: none;
+  width: 35%;
+  height: 25%;
+  background-color: aliceblue;
+  border-radius: 10px;
+  padding: 30px;
+  padding-bottom: 5px;
+}
+
+.user_div {
+    display: block;
+    text-align: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.pass_div {
+    display: block;
+    text-align: center;
+    justify-content: center;
+    height: 100%;
+}
+

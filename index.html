@@ -1,49 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="index.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="animations.css" />
+
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.js"
+      integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+      crossorigin="anonymous"
+    ></script>
     <script src="index.js"></script>
-    <title>Min Game</title>
-</head>
-<body>
+    <title>Nim Game</title>
+  </head>
+  <body onload="Initialize()">
     <div class="header">
-        <div class="logo_container">
-            <img src="assets/logo2.png" alt="" class="logo" onclick="hey()">
-        </div>
-        <div class="login">
+      <div class="logo_container">
+        <a href="https://en.wikipedia.org/wiki/Nim"><img 
+          src="assets/logo2.png"
+          alt=""
+          class="logo"
+          
+        /></a>
+      </div>
+      <div class="login">
         <ul>
-            <li>Log In</li>
-            <li>|</li>
-            <li>Sign In</li>
+          <li onclick="showform()">Log In</li>
+          <li>|</li>
+          <li>Sign In</li>
         </ul>
-        </div>
+      </div>
     </div>
     <section class="page">
-        <div class="main_window">
-            <div class="classification">
-                oi
-            </div>
+      <div class="main_window">
+        <div id="login_form">
+            <span onclick="closeform()" class="close" title="Close Modal">&times;</span>
+            <label for="uname"><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" name="uname" required>
+      
+            <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="psw" required>
+              
+            <button type="submit" class="login_submit">Login</button>
+          </div>
+        <div class="classification">oi</div>
 
-            <div class="game_window">
-
-            </div>
-
-            <div class="misc">
-                <div class="configurations">
-                    oi
-                </div>
-
-                <div class="instructions_commands">
-                    oi
-                </div>
-
-
-            </div>
+        <div class="game_window">
+          <div id="draw_area">Loading</div>
         </div>
+
+        <div class="misc">
+          <div class="configurations">
+            <div class="dropdown">
+              <button class="dropbtn" id="dropdownbtn_text1">
+                Number of Lines - 4
+              </button>
+              <div class="dropdown-content">
+                <p onclick="change_table(4)">4</p>
+                <p onclick="change_table(5)">5</p>
+                <p onclick="change_table(6)">6</p>
+                <p onclick="change_table(7)">7</p>
+              </div>
+            </div>
+
+            <div class="dropdown">
+              <button class="dropbtn" id="dropdownbtn_text2">
+                Opponent - AI
+              </button>
+              <div class="dropdown-content">
+                <p onclick="define_opponent('AI')">AI</p>
+                <p onclick="define_opponent('Player')">Player</p>
+              </div>
+            </div>
+
+            <div class="dropdown">
+              <button class="dropbtn" id="dropdownbtn_text3">
+                Order - First
+              </button>
+              <div class="dropdown-content">
+                <p onclick="define_order('First')">First</p>
+                <p onclick="define_order('Second')">Second</p>
+              </div>
+            </div>
+
+            <div class="dropdown">
+              <button class="dropbtn" id="dropdownbtn_text4">
+                Difficulty - Easy
+              </button>
+              <div class="dropdown-content">
+                <p onclick="define_difficulty('Easy')">Easy</p>
+                <p onclick="define_difficulty('Hard')">Hard</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="instructions_commands">
+            <button onclick="startgame()">start</button>
+          </div>
+        </div>
+      </div>
     </section>
-    
-</body>
+  </body>
 </html>
