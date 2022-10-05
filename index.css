@@ -7,9 +7,9 @@
 .logo_container {
     margin: 0;
     float: left;
-    width: 220px;
-    height: 65px;
-    margin-left: 10px;
+    width: 95px;
+    height: 68px;
+    margin-left: 20px;
 }
 
 .logo {
@@ -19,7 +19,7 @@
 
 .login {
     float: right;
-    margin-top: 10px;
+    margin-top: 20px;
     margin-right: 15px;
 }
 
@@ -28,8 +28,7 @@
     display: inline;
     font-size: 20px;
     margin-right: 15px;
-    color: white;
-
+    color: rgba(255, 255, 255, 0.813);
 }
 
 .header {
@@ -46,5 +45,50 @@
     background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)), url("assets/por_do_sol.jpg");
     background-size: fill;
     background-position: center;
-    height: 95vh;
+    height: 93vh;
+}
+
+.classification,
+.game_window,
+.misc {
+    border: groove 2px rgb(255, 255, 255);
+    display: inline-block;
+    background-color: none;
+    border-radius: 10px;
+}
+
+.classification {
+    width: 18%;
+    margin-right: 50px;
+}
+
+.game_window {
+    width: 50%;
+    margin-right: 50px;
+}
+
+.misc {
+    width: 18%;
+}
+
+.instructions_commands {
+    border: groove 2px white;
+    height: 60%;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.configurations {
+    height: 30%;
+    margin-bottom: 30px;
+    border: groove 2px white;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.main_window {
+    display: flex;
+    padding-top: 30px;
+    height: 92%;
+    margin: 0;
 }
