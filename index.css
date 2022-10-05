@@ -60,7 +60,6 @@
 .classification,
 .game_window,
 .misc {
-  border: groove 2px rgb(255, 255, 255);
   display: inline-block;
   background-color: none;
   border-radius: 10px;
@@ -70,6 +69,7 @@
   width: 18%;
   margin-right: 50px;
   margin-left: 50px;
+  background-color: rgba(0, 0, 0, 0.148);
 }
 
 .game_window {
@@ -78,6 +78,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: rgba(0, 0, 0, 0.148);
 }
 
 .misc {
@@ -86,7 +87,7 @@
 }
 
 .instructions_commands {
-  border: groove 2px white;
+  background-color: rgba(0, 0, 0, 0.148);
   height: 65%;
   border-radius: 10px;
 }
@@ -94,8 +95,9 @@
 .configurations {
   height: 30%;
   margin-bottom: 33px;
-  border: groove 2px white;
+  background-color: rgba(0, 0, 0, 0.148);
   border-radius: 10px;
+  padding: 10px;
 }
 
 .main_window {
@@ -142,16 +144,15 @@
 }
 
 .user_div {
-    display: block;
-    text-align: center;
-    justify-content: center;
-    height: 100%;
+  display: block;
+  text-align: center;
+  justify-content: center;
+  height: 100%;
 }
 
 .pass_div {
-    display: block;
-    text-align: center;
-    justify-content: center;
-    height: 100%;
+  display: block;
+  text-align: center;
+  justify-content: center;
+  height: 100%;
 }
-
