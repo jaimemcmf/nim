@@ -5,7 +5,8 @@ var IsAvailable = new Array();
 var rows = 4;
 var opponent = "AI";
 var difficulty = "Easy";
-var order= "First";
+var turn= 1;
+var gtype = "Default";
 var FirstPlay = true;
 var AllowedRow;
 var lines4 = [1,3,5,7];
@@ -54,13 +55,19 @@ function define_opponent(n){
 }
 
 function define_order(n){
-    order = n;
+    if(n === "First") turn = 1;
+    else turn = 2;
     document.getElementById("dropdownbtn_text3").innerHTML = "Order - " + n;
 }
 
 function define_difficulty(n){
     difficulty = n;
     document.getElementById("dropdownbtn_text4").innerHTML = "Difficulty - " + n;
+}
+
+function define_gametype(n){
+    gametype = n;
+    document.getElementById("dropdownbtn_text5").innerHTML = "Gametype - " + n;
 }
 
 function startgame() {
@@ -154,6 +161,9 @@ async function remove(element) {
 
 function endturn(){
     FirstPlay = true;
+    if(turn == 1) turn = 2;
+    else turn = 1;
+    console.log(nimSum(numberRows()));
     Initialize();
 }
 

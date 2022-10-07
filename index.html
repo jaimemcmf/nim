@@ -13,6 +13,7 @@
       crossorigin="anonymous"
     ></script>
     <script src="index.js"></script>
+    <script src="AI.js"></script>
     <title>Nim Game</title>
   </head>
   <body onload="Initialize()">
@@ -92,6 +93,17 @@
               <div class="dropdown-content">
                 <p onclick="define_difficulty('Easy')">Easy</p>
                 <p onclick="define_difficulty('Hard')">Hard</p>
+              </div>
+            </div>
+
+            <div class="dropdown">
+              <button class="dropbtn" id="dropdownbtn_text5">
+                Game Type - Default
+              </button>
+              <div class="dropdown-content">
+                <p onclick="define_gametype('Default')">Default</p>
+                <p onclick="define_gametype('Misere')">A La Misère</p>
+                
               </div>
             </div>
           </div>
