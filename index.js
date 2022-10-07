@@ -61,7 +61,7 @@ function define_difficulty(n){
 }
 
 function startgame() {
-
+    Initialize();
 }
 
 function showform() {
