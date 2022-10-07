@@ -110,3 +110,17 @@ input[type="password"] {
   cursor: pointer;
   width: 100%;
 }
+
+.el_fig {
+  opacity: 100%;
+}
+
+/* Fade out KeyFrames */
+@keyframes fade-out {
+  from {
+    opacity: 100%;
+  }
+  to {
+    opacity: 0%;
+  }
+}
