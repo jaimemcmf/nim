@@ -79,11 +79,19 @@ function startgame() {
 }
 
 function showform() {
-    document.getElementById("login_form").style.display = "block";
+
+    var form = document.getElementById("login_form");
+    form.style.display = "block";
+    form.style.animation = "fade-in 0.4s forwards";
+
+
 }
 
-function closeform(){
-    document.getElementById("login_form").style.display = "none";
+async function closeform(){
+    var form = document.getElementById("login_form");
+    form.style.animation = "fade-out 0.2s forwards";
+    await new Promise(r => setTimeout(r, 200));
+    form.style.display = "none";
 }
 
 async function remove(element) {

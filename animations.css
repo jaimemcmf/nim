@@ -125,3 +125,13 @@ input[type="password"] {
     opacity: 0%;
   }
 }
+
+/* Fade in KeyFrames */
+@keyframes fade-in {
+  from {
+    opacity: 0%;
+  }
+  to {
+    opacity: 100%;
+  }
+}
