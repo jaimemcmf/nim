@@ -165,7 +165,6 @@ async function remove(element) {
     }else{
         console.log("Number of Lines not allowed")
     }
-
 }
 
 function endturn(){
@@ -174,6 +173,8 @@ function endturn(){
     console.log(getNextMove('Default', numberRows()) + " " + turn + " played");
     if(turn == 1) turn = 2;
     else turn = 1;
+    Initialize();
+    play('Default', numberRows());
     Initialize();
 }
 

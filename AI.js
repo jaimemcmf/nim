@@ -41,7 +41,10 @@ function getNextMove (gt, arr) {
     return move;
 }
 
-funcio
+function play(gt,arr) {
+    move = getNextMove(gt, arr);
+    arr[move[0]] -= move[1];
+}
 
 // Programçao dinamica
 
