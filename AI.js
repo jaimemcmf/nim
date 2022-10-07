@@ -14,13 +14,16 @@ function winner (gt, arr) {
     if(gt == 'Default'){
         if(cont <= 1){
             console.log(turn + " has won!");
+            return true;
         }
     }else{
         if(cont <= 1){
             if(turn == 1) console.log("2 has won!");
-            else console.log("1 has won");       
+            else console.log("1 has won");     
+            return true;  
         }
     }
+    return false;
 }
 
 function getNextMove (gt, arr) {

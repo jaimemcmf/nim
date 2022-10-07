@@ -55,7 +55,7 @@ function define_opponent(n){
 }
 
 function define_order(n){
-    if(n === "First") turn = 1;
+    if(n == "First") turn = 1;
     else turn = 2;
     document.getElementById("dropdownbtn_text3").innerHTML = "Order - " + n;
 }
@@ -76,16 +76,18 @@ function startgame() {
     lines6 = [1,3,5,7,9,11];
     lines7 = [1,3,5,7,9,11,13];
     FirstPlay = true;
+    console.log(turn);
+    if(turn==2){
+        play('Default', numberRows());
+    }
+    turn = 1;
     Initialize();
 }
 
 function showform() {
-
     var form = document.getElementById("login_form");
     form.style.display = "block";
     form.style.animation = "fade-in 0.4s forwards";
-
-
 }
 
 async function closeform(){
@@ -94,6 +96,8 @@ async function closeform(){
     await new Promise(r => setTimeout(r, 200));
     form.style.display = "none";
 }
+
+
 
 async function remove(element) {
     ElRow = element.attr('data-Rows');
@@ -168,13 +172,17 @@ async function remove(element) {
 }
 
 function endturn(){
+    if(winner('Default', numberRows())){
+        showWinner();
+    }
     FirstPlay = true;
-    winner('Default', numberRows());
-    console.log(getNextMove('Default', numberRows()) + " " + turn + " played");
     if(turn == 1) turn = 2;
     else turn = 1;
-    Initialize();
+    //Initialize();
     play('Default', numberRows());
+    if(winner('Default', numberRows())){
+        showWinner();
+    }
     Initialize();
 }
 
@@ -183,4 +191,17 @@ function numberRows(){
     if(rows == 5) return lines5;
     if(rows == 6) return lines6;
     if(rows == 7) return lines7;
+}
+
+function showWinner(turn){
+    var form = document.getElementById("winnerpop");
+    form.style.display = "block";
+    form.style.animation = "fade-in 0.4s forwards";
+}
+
+async function closewinner(){
+    var form = document.getElementById("winnerpop");
+    form.style.animation = "fade-out 0.2s forwards";
+    await new Promise(r => setTimeout(r, 200));
+    form.style.display = "none";
 }

@@ -143,6 +143,20 @@
   padding-bottom: 5px;
 }
 
+#winnerpop {
+  left: 50%;
+  top: 25%;
+  transform: translate(-50%, 5%);
+  position: fixed;
+  display: none;
+  width: 35%;
+  height: 25%;
+  background-color: aliceblue;
+  border-radius: 10px;
+  padding: 30px;
+  padding-bottom: 5px;
+}
+
 .user_div {
   display: block;
   text-align: center;
