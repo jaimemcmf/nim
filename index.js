@@ -156,3 +156,10 @@ function endturn(){
     FirstPlay = true;
     Initialize();
 }
+
+function numberRows(){
+    if(rows == 4) return lines4;
+    if(rows == 5) return lines5;
+    if(rows == 6) return lines6;
+    if(rows == 7) return lines7;
+}
