@@ -75,6 +75,7 @@ function startgame() {
     lines5 = [1,3,5,7,9];
     lines6 = [1,3,5,7,9,11];
     lines7 = [1,3,5,7,9,11,13];
+    FirstPlay = true;
     Initialize();
 }
 
@@ -169,9 +170,10 @@ async function remove(element) {
 
 function endturn(){
     FirstPlay = true;
+    winner('Default', numberRows());
+    console.log(getNextMove('Default', numberRows()) + " " + turn + " played");
     if(turn == 1) turn = 2;
     else turn = 1;
-    console.log(nimSum(numberRows()));
     Initialize();
 }
 
