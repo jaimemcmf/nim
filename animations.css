@@ -129,6 +129,10 @@ input[type="password"] {
   opacity: 100%;
 }
 
+.el_fig:hover{
+  background-color: brown;
+}
+
 /* Fade out KeyFrames */
 @keyframes fade-out {
   from {
