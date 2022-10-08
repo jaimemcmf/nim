@@ -5,6 +5,7 @@ var IsAvailable = new Array();
 var rows = 4;
 var opponent = "AI";
 var difficulty = "Easy";
+var ConstTurn;
 var turn = 1;
 var gtype = "Default";
 var FirstPlay = true;
@@ -73,8 +74,9 @@ function define_opponent(n) {
 }
 
 function define_order(n) {
-    if (n == "First") turn = 1;
-    else turn = 2;
+    if (n == "First") ConstTurn = 1;
+    else ConstTurn = 2;
+    turn = ConstTurn;
     document.getElementById("dropdownbtn_text3").innerHTML = "Order - " + n;
     var dropdownContent = document.getElementById("dropdown-content3");
     dropdownContent.style.display = "none";
@@ -99,6 +101,7 @@ function startgame() {
     lines5 = [1, 3, 5, 7, 9];
     lines6 = [1, 3, 5, 7, 9, 11];
     lines7 = [1, 3, 5, 7, 9, 11, 13];
+    turn = ConstTurn;
     FirstPlay = true;
     console.log(turn);
     if (turn == 2) {
@@ -207,6 +210,7 @@ function endturn() {
     if (winner('Default', numberRows())) {
         showWinner();
     }
+    numberRows().sort(function (a, b) { return a - b });
     Initialize();
 }
 
