@@ -41,12 +41,12 @@ function Initialize() {
         draw_element = draw_element + '</tr></table>'
     }
     $('#draw_area').html(draw_element);
-    $('.el_fig').css({ 'height': Math.floor(480 / rows - 15) + 'px'});
+    $('.el_fig').css({ 'height': Math.floor(480 / rows - 15) + 'px' });
     $('.el_fig').click(function () { remove($(this)) });
-    if(lay == 'Vertical'){
-        $('.game_window table').css({'margin' : 'auto'});
+    if (lay == 'Vertical') {
+        $('.game_window table').css({ 'margin': 'auto' });
         $('#draw_area').css({ 'transform': 'rotate(0deg)' });
-    }else{
+    } else {
         $('#draw_area').css({ 'transform': 'rotate(270deg)' });
     }
 }
@@ -56,7 +56,7 @@ function openDropDown(s) {
     var dropdownContent = document.getElementById(id);
     dropdownContent.style.display = "block";
     // Close all the other dropdown ->
-    for (i = 1; i <= 5; i++) {
+    for (i = 1; i <= 6; i++) {
         if (i != s) {
             id = "dropdown-content" + i;
             var dropdownContent = document.getElementById(id);
@@ -213,17 +213,22 @@ async function remove(element) {
 
 async function endturn() {
     if (winner('Default', numberRows())) {
+        if (turn == 1) turn = 2;
+        else turn = 1;
         showWinner();
+        return;
     }
     FirstPlay = true;
     if (turn == 1) turn = 2;
     else turn = 1;
-    //Initialize();
-    play('Default', numberRows());
-    if (winner('Default', numberRows())) {
-        showWinner();
+    if (opponent == "AI") {
+        //if Player vs AI
+        play('Default', numberRows());
+        if (winner('Default', numberRows())) {
+            showWinner();
+        }
+        Initialize();
     }
-    Initialize();
     numberRows().sort(function (a, b) { return a - b });
     await new Promise(r => setTimeout(r, 450));
     Initialize();
@@ -236,8 +241,19 @@ function numberRows() {
     if (rows == 7) return lines7;
 }
 
-function showWinner(turn) {
+function showWinner() {
     var form = document.getElementById("winnerpop");
+    var printwinner = '';
+    if (turn == 1) {
+        printwinner = "You Have Won!";
+    } else {
+        if (opponent == 'AI') {
+            printwinner = "The AI has Won :(";
+        } else {
+            printwinner = "Your Opponent Won :(";
+        }
+    }
+    document.getElementById("winnerName").innerHTML = printwinner;
     form.style.display = "block";
     form.style.animation = "fade-in 0.4s forwards";
 }
