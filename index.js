@@ -8,6 +8,7 @@ var difficulty = "Easy";
 var ConstTurn;
 var turn = 1;
 var gtype = "Default";
+var lay = "Horizontal"
 var FirstPlay = true;
 var AllowedRow;
 var lines4 = [1, 3, 5, 7];
@@ -16,7 +17,6 @@ var lines6 = [1, 3, 5, 7, 9, 11];
 var lines7 = [1, 3, 5, 7, 9, 11, 13];
 
 function Initialize() {
-    //P[1]=P1;P[2]=P2;P[3]=P3;P[4]=P4;P[5]=P5;P[6]=P6;P[7]=P7;P[8]=P8;P[9]=P9;P[10]=P10;
     if (rows === 4) {
         lines = lines4;
     } else if (rows === 5) {
@@ -41,8 +41,14 @@ function Initialize() {
         draw_element = draw_element + '</tr></table>'
     }
     $('#draw_area').html(draw_element);
-    $('.el_fig').css({ 'height': Math.floor(480 / rows - 15) + 'px' });
+    $('.el_fig').css({ 'height': Math.floor(480 / rows - 15) + 'px'});
     $('.el_fig').click(function () { remove($(this)) });
+    if(lay == 'Vertical'){
+        $('.game_window table').css({'margin' : 'auto'});
+        $('#draw_area').css({ 'transform': 'rotate(0deg)' });
+    }else{
+        $('#draw_area').css({ 'transform': 'rotate(270deg)' });
+    }
 }
 
 function openDropDown(s) {
@@ -93,6 +99,13 @@ function define_gametype(n) {
     gametype = n;
     document.getElementById("dropdownbtn_text5").innerHTML = "Gametype - " + n;
     var dropdownContent = document.getElementById("dropdown-content5");
+    dropdownContent.style.display = "none";
+}
+
+function define_layout(n) {
+    lay = n;
+    document.getElementById("dropdownbtn_text6").innerHTML = "Layout - " + n;
+    var dropdownContent = document.getElementById("dropdown-content6");
     dropdownContent.style.display = "none";
 }
 

@@ -34,7 +34,7 @@
         </ul>
       </div>
     </div>
-    <section class="page">
+
       <div class="main_window">
         <div id="login_form">
             <span onclick="closeform()" class="close" title="Close Modal">&times;</span>
@@ -56,7 +56,8 @@
         </div>
 
         <div class="game_window">
-          <!--<button onclick="endturn()">Next Turn ---</button> -->
+          <button onclick="endturn()" class='nextTurnBtn'>Next Turn</button>
+          
           <div id="draw_area">Loading</div>
         </div>
 
@@ -114,12 +115,23 @@
                 
               </div>
             </div>
+
+            <div class="dropdown">
+              <button class="dropbtn" id="dropdownbtn_text6" onclick="openDropDown(6)">
+                Layout - Horizontal
+              </button>
+              <div class="dropdown-content" id="dropdown-content6">
+                <p onclick="define_layout('Horizontal')">Horizontal</p>
+                <p onclick="define_layout('Vertical')">Vertical</p>
+                
+              </div>
+            </div>
           </div>
 
           <div class="instructions_commands">
           </div>
         </div>
       </div>
-    </section>
+
   </body>
 </html>

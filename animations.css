@@ -14,8 +14,9 @@
   position: relative;
   display: inline-block;
   width: 100%;
-  margin-bottom: 12px;
-  height: 16.5%;
+  margin-bottom: 6px;
+  margin-top: 6px;
+  height: 12%;
 }
 
 /* Dropdown Content (Hidden by Default) */
@@ -93,7 +94,7 @@ span.psw {
   position: absolute;
   right: 25px;
   top: 0;
-  color: #000;
+  color: rgb(255, 255, 255);
   font-size: 35px;
   font-weight: bold;
 }
@@ -112,14 +113,15 @@ input[type="password"] {
   display: inline-block;
   border: 1px solid #ccc;
   box-sizing: border-box;
+  background-color: rgb(242, 229, 229);
 }
 
 /* Set a style for all buttons */
 .login_submit {
-  background-color: #04aa6d;
+  background-color: black;
   color: white;
   padding: 14px 20px;
-  margin: 8px 0;
+  margin: 3% 0;
   border: none;
   cursor: pointer;
   width: 100%;
@@ -154,3 +156,4 @@ input[type="password"] {
     opacity: 100%;
   }
 }
+
