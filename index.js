@@ -198,7 +198,7 @@ async function remove(element) {
     }
 }
 
-function endturn() {
+async function endturn() {
     if (winner('Default', numberRows())) {
         showWinner();
     }
@@ -210,7 +210,9 @@ function endturn() {
     if (winner('Default', numberRows())) {
         showWinner();
     }
+    Initialize();
     numberRows().sort(function (a, b) { return a - b });
+    await new Promise(r => setTimeout(r, 450));
     Initialize();
 }
 
