@@ -64,10 +64,10 @@
         <div class="misc">
           <div class="configurations">
             <div class="dropdown">
-              <button class="dropbtn" id="dropdownbtn_text1"  onclick="openDropDown(1)">
+              <button class="dropbtn" id="dropdownbtn_text1" onmouseover="openDropDown(1)" onmouseout="closeDropDown(1)">
                 Number of Lines - 4
               </button>
-              <div class="dropdown-content" id="dropdown-content1">
+              <div class="dropdown-content" id="dropdown-content1" onclick="closeDropDown(1)" onmouseover="openDropDown(1)" onmouseout="closeDropDown(1)">
                 <p onclick="change_table(4)">4</p>
                 <p onclick="change_table(5)">5</p>
                 <p onclick="change_table(6)">6</p>
@@ -76,40 +76,40 @@
             </div>
 
             <div class="dropdown">
-              <button class="dropbtn" id="dropdownbtn_text2" onclick="openDropDown(2)">
+              <button class="dropbtn" id="dropdownbtn_text2" onmouseover="openDropDown(2)" onmouseout="closeDropDown(2)">
                 Opponent - AI
               </button>
-              <div class="dropdown-content" id="dropdown-content2">
-                <p onclick="define_opponent('AI')">AI</p>
+              <div class="dropdown-content" id="dropdown-content2" onmouseover="openDropDown(2)" onmouseout="closeDropDown(2)">
+                <p onclick="define_opponent('AI')" >AI</p>
                 <p onclick="define_opponent('Player')">Player</p>
               </div>
             </div>
 
             <div class="dropdown">
-              <button class="dropbtn" id="dropdownbtn_text3" onclick="openDropDown(3)">
+              <button class="dropbtn" id="dropdownbtn_text3" onmouseover="openDropDown(3)" onmouseout="closeDropDown(3)">
                 Order - First
               </button>
-              <div class="dropdown-content" id="dropdown-content3">
+              <div class="dropdown-content" id="dropdown-content3" onclick="closeDropDown(3)" onmouseover="openDropDown(3)" onmouseout="closeDropDown(3)">
                 <p onclick="define_order('First')">First</p>
                 <p onclick="define_order('Second')">Second</p>
               </div>
             </div>
 
             <div class="dropdown">
-              <button class="dropbtn" id="dropdownbtn_text4" onclick="openDropDown(4)">
+              <button class="dropbtn" id="dropdownbtn_text4" onmouseover="openDropDown(4)" onmouseout="closeDropDown(4)">
                 Difficulty - Easy
               </button>
-              <div class="dropdown-content" id="dropdown-content4">
+              <div class="dropdown-content" id="dropdown-content4" onclick="closeDropDown(4)" onmouseover="openDropDown(4)" onmouseout="closeDropDown(4)">
                 <p onclick="define_difficulty('Easy')">Easy</p>
                 <p onclick="define_difficulty('Hard')">Hard</p>
               </div>
             </div>
 
             <div class="dropdown">
-              <button class="dropbtn" id="dropdownbtn_text5" onclick="openDropDown(5)">
+              <button class="dropbtn" id="dropdownbtn_text5" onmouseover="openDropDown(5)" onmouseout="closeDropDown(5)">
                 Game Type - Default
               </button>
-              <div class="dropdown-content" id="dropdown-content5">
+              <div class="dropdown-content" id="dropdown-content5" onclick="closeDropDown(5)" onmouseover="openDropDown(5)" onmouseout="closeDropDown(5)">
                 <p onclick="define_gametype('Default')">Default</p>
                 <p onclick="define_gametype('Misere')">A La Misère</p>
                 
@@ -117,10 +117,10 @@
             </div>
 
             <div class="dropdown">
-              <button class="dropbtn" id="dropdownbtn_text6" onclick="openDropDown(6)">
+              <button class="dropbtn" id="dropdownbtn_text6" onmouseover="openDropDown(6)" onmouseout="closeDropDown(6)">
                 Layout - Horizontal
               </button>
-              <div class="dropdown-content" id="dropdown-content6">
+              <div class="dropdown-content" id="dropdown-content6" onclick="closeDropDown(6)" onmouseover="openDropDown(6)" onmouseout="closeDropDown(6)">
                 <p onclick="define_layout('Horizontal')">Horizontal</p>
                 <p onclick="define_layout('Vertical')">Vertical</p>
                 

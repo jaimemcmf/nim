@@ -51,18 +51,17 @@ function Initialize() {
     }
 }
 
+
+function closeDropDown(s) {
+    id = "dropdown-content" + s;
+    var dropdownContent = document.getElementById(id);
+    dropdownContent.style.display = "none";
+}
+
 function openDropDown(s) {
     id = "dropdown-content" + s;
     var dropdownContent = document.getElementById(id);
     dropdownContent.style.display = "block";
-    // Close all the other dropdown ->
-    for (i = 1; i <= 6; i++) {
-        if (i != s) {
-            id = "dropdown-content" + i;
-            var dropdownContent = document.getElementById(id);
-            dropdownContent.style.display = "none";
-        }
-    }
 }
 
 function change_table(n) {
@@ -218,20 +217,22 @@ async function endturn() {
         showWinner();
         return;
     }
-    FirstPlay = true;
-    if (turn == 1) turn = 2;
-    else turn = 1;
-    if (opponent == "AI") {
-        //if Player vs AI
-        play('Default', numberRows());
-        if (winner('Default', numberRows())) {
-            showWinner();
+    if (!FirstPlay) {
+        if (turn == 1) turn = 2;
+        else turn = 1;
+        if (opponent == "AI") {
+            //if Player vs AI
+            play('Default', numberRows());
+            if (winner('Default', numberRows())) {
+                showWinner();
+            }
+            Initialize();
         }
+        numberRows().sort(function (a, b) { return a - b });
+        await new Promise(r => setTimeout(r, 450));
         Initialize();
+        FirstPlay = true;
     }
-    numberRows().sort(function (a, b) { return a - b });
-    await new Promise(r => setTimeout(r, 450));
-    Initialize();
 }
 
 function numberRows() {
