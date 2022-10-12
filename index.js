@@ -265,3 +265,15 @@ async function closewinner() {
     await new Promise(r => setTimeout(r, 200));
     form.style.display = "none";
 }
+
+//Instructions
+//Nim is a simple puzzle game that can be played either against AI or other players.
+//The rules are simple: in your turn, you can take as many sticks as you desire, but from only one column at the time.
+
+//Configuration Instructions:
+//Number of Lines (temos que mudar este nome porque o default é number of columns): defines the number of lines in the board.
+//Opponent: defines if you're playing against the Artificial Intelligence or a fellow player.
+//Order: defines who plays first (first if it's you, second if it's the opponent)
+//Difficulty: defines the difficulty of the AI. Easy: AI plays randomly. Hard: AI plays perfectly using the NimSum calculation.
+//Game Type: There are two game types: Standard: wins the player that takes the last stick of the board. A La Misère: loses the player that takes the last stick of the board.
+//Layout: defines if the board is horizontal ou vertical. Note that, if the board is vertical, you take from lines and not columns.

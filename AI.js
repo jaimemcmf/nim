@@ -57,20 +57,3 @@ function play(gt, arr) {
         arr[randRow] -= Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
     }
 }
-
-// Programçao dinamica
-
-// Exercicio das pedras, guardar num array em que estados e possivel ganhar
-// Apos isso, ver se é possivel chegar a alguma posiçao de vitoria atraves do estado atual
-// Ver se estado é de vitoria caso a soma Nim seja 0
-// Caso não haja nenhuma posição de vitoria possivel
-// Escolher uma posição perdedora aleatoriamente
-
-// ----------------------------------------------
-
-// Kinda Pesquisa Exaustiva
-
-// Para calcular um estado, começar na ultima/primeira linha, começar a remover elementos e verificar se
-// conseguimos chegar a soma nim 0, na primeira situação que aconteça fazer essa jogada
-// Caso não exista, escolher uma linha aleatoria(que nao esteja vazia) e tirar um numero aleatorio de elementos
-// Sendo X o numero de elementos da linha e R o numero de elementos aleatorio R <= X
