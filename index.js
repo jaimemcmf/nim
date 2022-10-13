@@ -11,6 +11,7 @@ var gtype = "Default";
 var lay = "Horizontal"
 var FirstPlay = true;
 var AllowedRow;
+var mode = 1;
 var lines4 = [1, 3, 5, 7];
 var lines5 = [1, 3, 5, 7, 9];
 var lines6 = [1, 3, 5, 7, 9, 11];
@@ -108,19 +109,24 @@ function define_layout(n) {
     dropdownContent.style.display = "none";
 }
 
-function startgame() {
+async function startgame() {
+    reset();
+    if (turn == 2) {
+        play('Default', numberRows(), difficulty);
+        numberRows().sort(function (a, b) { return a - b });
+        await new Promise(r => setTimeout(r, 450));
+    }
+    turn = 1;
+    Initialize();
+}
+
+function reset(){
     lines4 = [1, 3, 5, 7];
     lines5 = [1, 3, 5, 7, 9];
     lines6 = [1, 3, 5, 7, 9, 11];
     lines7 = [1, 3, 5, 7, 9, 11, 13];
     turn = ConstTurn;
     FirstPlay = true;
-    console.log(turn);
-    if (turn == 2) {
-        play('Default', numberRows());
-    }
-    turn = 1;
-    Initialize();
 }
 
 function showform() {
@@ -211,9 +217,10 @@ async function remove(element) {
 }
 
 async function endturn() {
+    console.log("Turn: " + turn + " Just pressed End Turn");
+    if(turn == 1) turn = 2;
+    else turn = 1;
     if (winner('Default', numberRows())) {
-        if (turn == 1) turn = 2;
-        else turn = 1;
         showWinner();
         return;
     }
@@ -222,10 +229,13 @@ async function endturn() {
         else turn = 1;
         if (opponent == "AI") {
             //if Player vs AI
-            play('Default', numberRows());
+            play('Default', numberRows(), difficulty);
+            turn = 1;
             if (winner('Default', numberRows())) {
                 showWinner();
             }
+            numberRows().sort(function (a, b) { return a - b });
+            await new Promise(r => setTimeout(r, 450));
             Initialize();
         }
         numberRows().sort(function (a, b) { return a - b });
@@ -264,6 +274,8 @@ async function closewinner() {
     form.style.animation = "fade-out 0.2s forwards";
     await new Promise(r => setTimeout(r, 200));
     form.style.display = "none";
+    reset();
+    Initialize();
 }
 
 //Instructions

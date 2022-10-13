@@ -18,8 +18,8 @@ function winner(gt, arr) {
         }
     } else {
         if (cont <= 1) {
-            if (turn == 1) console.log("2 has won!");
-            else console.log("1 has won");
+            if (turn == 1) console.log("1 has won!");
+            else console.log("2 has won");
             return true;
         }
     }
@@ -44,7 +44,8 @@ function getNextMove(gt, arr) {
     return move;
 }
 
-function play(gt, arr) {
+function play(gt, arr, dif) {
+    if(dif == "Impossible"){
     move = getNextMove(gt, arr);
     console.log(move);
     if (move[0] != -1) arr[move[0]] -= move[1];
@@ -55,5 +56,57 @@ function play(gt, arr) {
             randRow = Math.floor(Math.random() * rows);
         }
         arr[randRow] -= Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
+    }
+    }else if(dif == "Easy"){
+        console.log("Randomizing");
+        randRow = Math.floor(Math.random() * rows);
+        while (arr[randRow] == 0) {
+            randRow = Math.floor(Math.random() * rows);
+        }
+        arr[randRow] -= Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
+    }else if(dif == "Average"){
+        var chance = Math.random();
+        if(chance < 0.3){
+            move = getNextMove(gt, arr);
+            console.log(move);
+            if (move[0] != -1) arr[move[0]] -= move[1];
+            else {
+                console.log("Randomizing");
+                randRow = Math.floor(Math.random() * rows);
+                while (arr[randRow] == 0) {
+                    randRow = Math.floor(Math.random() * rows);
+                }
+                arr[randRow] -= Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
+            }
+        }else{
+        console.log("Randomizing");
+        randRow = Math.floor(Math.random() * rows);
+        while (arr[randRow] == 0) {
+            randRow = Math.floor(Math.random() * rows);
+        }
+        arr[randRow] -= Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
+        }
+    }else if(dif == "Hard"){
+        var chance = Math.random();
+        if(chance < 0.60){
+            move = getNextMove(gt, arr);
+            console.log(move);
+            if (move[0] != -1) arr[move[0]] -= move[1];
+            else {
+                console.log("Randomizing");
+                randRow = Math.floor(Math.random() * rows);
+                while (arr[randRow] == 0) {
+                    randRow = Math.floor(Math.random() * rows);
+                }
+                arr[randRow] -= Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
+            }
+        }else{
+        console.log("Randomizing");
+        randRow = Math.floor(Math.random() * rows);
+        while (arr[randRow] == 0) {
+            randRow = Math.floor(Math.random() * rows);
+        }
+        arr[randRow] -= Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
+        }
     }
 }

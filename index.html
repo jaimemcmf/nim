@@ -52,7 +52,7 @@
             <button onclick="startgame(); closewinner()">New Game</button>
           </div>
         <div class="classification">
-          <button class="start" onclick="startgame()">Start Game</button>
+          <button class="start" onclick="startgame()" id="startGamebtn">Start Game</button>
         </div>
 
         <div class="game_window">
@@ -101,7 +101,9 @@
               </button>
               <div class="dropdown-content" id="dropdown-content4" onclick="closeDropDown(4)" onmouseover="openDropDown(4)" onmouseout="closeDropDown(4)">
                 <p onclick="define_difficulty('Easy')">Easy</p>
+                <p onclick="define_difficulty('Average')">Average</p>
                 <p onclick="define_difficulty('Hard')">Hard</p>
+                <p onclick="define_difficulty('Impossible')">Impossible</p>
               </div>
             </div>
 
