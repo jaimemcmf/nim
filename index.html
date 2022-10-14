@@ -12,7 +12,7 @@
       integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
       crossorigin="anonymous"
     ></script>
-    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <script src="https://kit.fontawesome.com/3c508702a0.js" crossorigin="anonymous"></script>
     <script src="index.js"></script>
     <script src="AI.js"></script>
     <title>Nim Game</title>
@@ -80,7 +80,7 @@
             <p id="winnerName"></p>
             <button id="newgamebtn" onclick="startgame(); closewinner()">New Game</button>
           </div>
-        <div class="classification">
+        <div class="start_messages">
           <button id="start" onclick="startgame()">Start Game</button>
         </div>
 
@@ -92,7 +92,7 @@
 
         <div class="misc">
           <div id="configurations">
-            <p onclick="showInfo()" id="infoicon">Info</p>
+            <i class="fa-solid fa-circle-info" id="infoicon" onclick="showInfo()"></i>
             <div class="dropdown">
               <button class="dropbtn" id="dropdownbtn_text1" onmouseover="openDropDown(1)" onmouseout="closeDropDown(1)">
                 Number of Columns - 4
@@ -110,7 +110,7 @@
                 Opponent - AI
               </button>
               <div class="dropdown-content" id="dropdown-content2" onmouseover="openDropDown(2)" onmouseout="closeDropDown(2)">
-                <p onclick="define_opponent('AI')" >AI</p>
+                <p onclick="define_opponent('AI')">AI</p>
                 <p onclick="define_opponent('Player')">Player</p>
               </div>
             </div>
@@ -159,10 +159,40 @@
             </div>
           </div>
 
-          <div class="instructions_commands">
+          <div class="rules_classifications">
+            <div class="rulesclassificationsbtns">
+              <button id="classificationsbtn" onclick="showClassifications()">Classifications</button>
+              <button id="rulesbtn" onclick="showRules()">Rules</button>
+            </div>
+            <div id="classificationspop">
+              <span onclick="closeClassifications()" class="close" title="Close Modal">&times;</span>
+              <h2>Classifications</h2>
+              <hr>
+              <br>
+              <h3>Player vs AI</h3>
+              <br>
+              <p>Player: &nbsp;<p id="playerAIscore"></p></p>
+              <p>AI: &nbsp;<p id="aiscore"></p></p>
+              <br>
+              <br>
+              <h3>Player 1 vs Player 2</h3>
+              <br>
+              <p>Player 1: &nbsp;<p id="playeronescore"></p>
+              <p>Player 2: &nbsp;<p id="playertwoscore"></p>
+            </div>
+            <div id="rulespop">
+              <span onclick="closeRules()" class="close" title="Close Modal">&times;</span>
+              <h2>Rules</h2>
+              <hr>
+              <br>
+              <p>Nim is a simple puzzle game that can be played either against AI or a fellow player.</p>
+              <br>
+              <p>You can take as many blocks as you desire, but from only one column/line at the time.</p>
+              <br>
+              <p>If you're playing the default game type, you win if you take the last block. If you're playing A La Misère, it's the contrary.</p>
+            </div>
           </div>
         </div>
       </div>
-
   </body>
 </html>

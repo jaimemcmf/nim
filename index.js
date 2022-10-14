@@ -1,6 +1,3 @@
-
-
-//var P = new Array();
 var IsAvailable = new Array();
 var rows = 4;
 var opponent = "AI";
@@ -13,6 +10,10 @@ var FirstPlay = true;
 var AllowedRow;
 var mode = 1;
 var inGame = 0;
+var AIwins = 0;
+var Playerwins = 0;
+var Player1wins = 0;
+var Player2wins = 0;
 var lines4 = [1, 3, 5, 7];
 var lines5 = [1, 3, 5, 7, 9];
 var lines6 = [1, 3, 5, 7, 9, 11];
@@ -137,9 +138,7 @@ async function startgame() {
         let btn = document.getElementById("start");
         btn.innerHTML = "Start Game";
         $("#start").css({"background-color":"black"});
-
     }
-    
 }
 
 function reset(){
@@ -192,94 +191,115 @@ async function closeInfo() {
     form.style.display = "none";
 }
 
+function showRules() {
+    var form = document.getElementById("rulespop");
+    var hide = document.getElementById("classificationspop");
+    form.style.display = "block";
+    hide.style.display = "none";
+    form.style.animation = "fade-in 0.4s forwards";
+}
 
+async function closeRules() {
+    var form = document.getElementById("rulespop");
+    form.style.animation = "fade-out 0.2s forwards";
+    await new Promise(r => setTimeout(r, 200));
+    form.style.display = "none";
+}
 
+function showClassifications() {
+    var form = document.getElementById("classificationspop");
+    var hide = document.getElementById("rulespop");
+    document.getElementById("aiscore").innerHTML = AIwins;
+    document.getElementById("playerAIscore").innerHTML = Playerwins;
+    document.getElementById("playeronescore").innerHTML = Player1wins;
+    document.getElementById("playertwoscore").innerHTML = Player2wins;
+    hide.style.display = "none"; 
+    form.style.display = "block";
+    form.style.animation = "fade-in 0.4s forwards";
+}
+
+async function closeClassifications() {
+    var form = document.getElementById("classificationspop");
+    form.style.animation = "fade-out 0.2s forwards";
+    await new Promise(r => setTimeout(r, 200));
+    form.style.display = "none";
+}
 
 async function remove(element) {
     ElRow = element.attr('data-Rows');
     var el = document.getElementById(element.attr('id'));
-    if (rows == 4) {
-        if (FirstPlay) {
-            el.style.animation = "fade-out 0.2s forwards";
-            await new Promise(r => setTimeout(r, 200));
-            AllowedRow = ElRow;
-            lines4[ElRow] -= 1;
-            Initialize();
-            FirstPlay = false;
-        } else {
-            if (AllowedRow == ElRow) {
+    if(inGame){
+        if (rows == 4) {
+            if (FirstPlay) {
                 el.style.animation = "fade-out 0.2s forwards";
                 await new Promise(r => setTimeout(r, 200));
+                AllowedRow = ElRow;
                 lines4[ElRow] -= 1;
                 Initialize();
+                FirstPlay = false;
+            } else {
+                if (AllowedRow == ElRow) {
+                    el.style.animation = "fade-out 0.2s forwards";
+                    await new Promise(r => setTimeout(r, 200));
+                    lines4[ElRow] -= 1;
+                    Initialize();
+                }
             }
-        }
-    } else if (rows == 5) {
-        if (FirstPlay) {
-            el.style.animation = "fade-out 0.2s forwards";
-            await new Promise(r => setTimeout(r, 200));
-            AllowedRow = ElRow;
-            lines5[ElRow] -= 1;
-            Initialize();
-            FirstPlay = false;
-        } else {
-            if (AllowedRow == ElRow) {
+        } else if (rows == 5) {
+            if (FirstPlay) {
                 el.style.animation = "fade-out 0.2s forwards";
                 await new Promise(r => setTimeout(r, 200));
+                AllowedRow = ElRow;
                 lines5[ElRow] -= 1;
                 Initialize();
+                FirstPlay = false;
+            } else {
+                if (AllowedRow == ElRow) {
+                    el.style.animation = "fade-out 0.2s forwards";
+                    await new Promise(r => setTimeout(r, 200));
+                    lines5[ElRow] -= 1;
+                    Initialize();
+                }
             }
-        }
-    } else if (rows == 6) {
-        if (FirstPlay) {
-            el.style.animation = "fade-out 0.2s forwards";
-            await new Promise(r => setTimeout(r, 200));
-            AllowedRow = ElRow;
-            lines6[ElRow] -= 1;
-            Initialize();
-            FirstPlay = false;
-        } else {
-            if (AllowedRow == ElRow) {
+        } else if (rows == 6) {
+            if (FirstPlay) {
                 el.style.animation = "fade-out 0.2s forwards";
                 await new Promise(r => setTimeout(r, 200));
+                AllowedRow = ElRow;
                 lines6[ElRow] -= 1;
                 Initialize();
+                FirstPlay = false;
+            } else {
+                if (AllowedRow == ElRow) {
+                    el.style.animation = "fade-out 0.2s forwards";
+                    await new Promise(r => setTimeout(r, 200));
+                    lines6[ElRow] -= 1;
+                    Initialize();
+                }
             }
-        }
-    } else if (rows == 7) {
-        if (FirstPlay) {
-            el.style.animation = "fade-out 0.2s forwards";
-            await new Promise(r => setTimeout(r, 200));
-            AllowedRow = ElRow;
-            lines7[ElRow] -= 1;
-            Initialize();
-            FirstPlay = false;
-        } else {
-            if (AllowedRow == ElRow) {
+        } else if (rows == 7) {
+            if (FirstPlay) {
                 el.style.animation = "fade-out 0.2s forwards";
                 await new Promise(r => setTimeout(r, 200));
+                AllowedRow = ElRow;
                 lines7[ElRow] -= 1;
                 Initialize();
+                FirstPlay = false;
+            } else {
+                if (AllowedRow == ElRow) {
+                    el.style.animation = "fade-out 0.2s forwards";
+                    await new Promise(r => setTimeout(r, 200));
+                    lines7[ElRow] -= 1;
+                    Initialize();
+                }
             }
+        } else {
+            console.log("Number of Lines not allowed")
         }
-    } else {
-        console.log("Number of Lines not allowed")
     }
 }
 
 async function endturn() {
-   /* if(turn == 1){
-        console.log("1");
-        turn = 2;  
-    } else {
-        console.log("2");
-        turn = 1;
-    } 
-    if (winner('Default', numberRows())) {
-        showWinner();
-        return;
-    }*/
-
     if (!FirstPlay) {
         if (turn == 1) turn = 2;
         else turn = 1;
@@ -306,15 +326,21 @@ function numberRows() {
 
 function showWinner() {
     var form = document.getElementById("winnerpop");
-
     var printwinner = '';
     if (turn == 1) {
         printwinner = "You have won!";
+        if(opponent == "AI"){
+            Playerwins++;
+        }else{
+            Player1wins++;
+        }
     } else {
         if (opponent == 'AI') {
             printwinner = "The AI has won.";
+            AIwins++;
         } else {
             printwinner = "Your Opponent won.";
+            Player2wins++;
         }
     }
     document.getElementById("winnerName").innerHTML = printwinner;

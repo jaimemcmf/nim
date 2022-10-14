@@ -8,7 +8,6 @@ body{
   background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)),
     url("assets/por_do_sol.jpg");
   background-size:cover;
-
   height: 100%;
 }
 
@@ -31,7 +30,7 @@ html {
 
 .login {
   float: right;
-  margin-top: 20px;
+  margin-top: 15px;
   margin-right: 15px;
 }
 
@@ -61,9 +60,7 @@ html {
   width: 100%;
 }
 
-
-
-.classification,
+.start_messages,
 .game_window,
 .misc {
   display: inline-block;
@@ -71,7 +68,7 @@ html {
   border-radius: 10px;
 }
 
-.classification {
+.start_messages {
   width: 18%;
   margin-right: 50px;
   margin-left: 50px;
@@ -92,7 +89,7 @@ html {
   border: none;
 }
 
-.instructions_commands {
+.rules_classifications {
   background-color: rgba(0, 0, 0, 0.148);
   height: 40%;
   border-radius: 10px;
@@ -194,6 +191,20 @@ html {
   margin-left: 25px;
 }
 
+#infoicon {
+  font-size: 20px;
+  float: right;
+  margin-right: 20px;
+  color: black;
+  cursor: pointer;
+}
+
+#infoicon:hover{
+  color: brown;
+  cursor: pointer;
+}
+
+
 #newgamebtn {
   background-color: brown;
   color: white;
@@ -222,8 +233,6 @@ html {
   justify-content: center;
   height: 100%;
 }
-
-
 
 button:hover{
   background-color: brown;
@@ -273,15 +282,67 @@ b{
   position: fixed;
 }
 
-#infoicon {
-  font-size: 20px;
-  float: right;
-  margin-right: 20px;
+#classificationspop {
+  position: relative;
+  display: none;
+  width: 81%;
+  height: 100%;
+  background-color: black;
   color: white;
+  border-radius: 10px;
+  margin-top: 3%;
+  font-size: 17px;
+  padding: 30px;
+  padding-bottom: 5px;
+}
+
+#classificationspop p {
+  display: inline-block;
+}
+
+
+#classificationsbtn {
+  top:10%;
+  width: 49%;
+  background-color: black;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  height: 30px;
   cursor: pointer;
 }
 
-#infoicon:hover{
-  color: brown;
+#classificationsbtn:hover {
+  background-color: brown;
+}
+
+#rulespop {
+  position: relative;
+  display: none;
+  width: 81%;
+  height: 100%;
+  background-color: black;
+  color: white;
+  border-radius: 10px;
+  margin-top: 3%;
+  font-size: 17px;
+  padding: 30px;
+  padding-bottom: 5px;
+}
+
+#rulesbtn {
+  top:10%;
+  width: 49%;
+  height: 30px;
+  background-color: black;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
   cursor: pointer;
+}
+
+#rulesbtn:hover {
+  background-color: brown;
 }

@@ -33,7 +33,6 @@ function getNextMove(gt, arr) {
         arr2 = [...arr];
         for (j = 0; j < arr[i]; j++) {
             arr2[i] -= 1;
-            //console.log("nimSUm== " + nimSum(arr2) + " " + i + " " + j + " " + rows);
             if (nimSum(arr2) == 0) {
                 move[0] = i;
                 move[1] = j + 1;
