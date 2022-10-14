@@ -346,3 +346,9 @@ b{
 #rulesbtn:hover {
   background-color: brown;
 }
+
+#movesMade {
+  color : white;
+  margin-top: 20px;
+  margin-left: 7px;
+}

@@ -1,3 +1,4 @@
+var l;
 function nimSum(arr) {
     let NimSum = arr[0];
     for (i = 1; i < rows; i++) {
@@ -44,11 +45,15 @@ function getNextMove(gt, arr) {
 }
 
 function play(gt, arr, dif) {
-
     if (dif == "Impossible") {
         move = getNextMove(gt, arr);
         console.log(move);
-        if (move[0] != -1) arr[move[0]] -= move[1];
+        if (move[0] != -1){
+            arr[move[0]] -= move[1];
+            l = move[0]+1;
+            var msg = "AI has removed " + move[1] + " elements from line " + l + "." + "<br>";
+            document.getElementById("movesMade").innerHTML += msg;
+        } 
         else {
             console.log("Randomizing");
             randRow = Math.floor(Math.random() * rows);
@@ -57,7 +62,7 @@ function play(gt, arr, dif) {
             }
             let randVal = Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
             arr[randRow] -= randVal;
-            var msg = "AI has Removed " + randVal + " elements from Line " + randRow + '\n';
+            var msg = "AI has removed " + randVal + " elements from line " + randRow + "." + "<br>";
             document.getElementById("movesMade").innerHTML += msg;
         }
     } else if (dif == "Easy") {
@@ -68,14 +73,19 @@ function play(gt, arr, dif) {
         }
         let randVal = Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
         arr[randRow] -= randVal;
-        var msg = "AI has Removed " + randVal + " elements from Line " + randRow + '\n';
+        var msg = "AI has removed " + randVal + " elements from line " + randRow + "." + "<br>";
         document.getElementById("movesMade").innerHTML += msg;
     } else if (dif == "Average") {
         var chance = Math.random();
         if (chance < 0.3) {
             move = getNextMove(gt, arr);
             console.log(move);
-            if (move[0] != -1) arr[move[0]] -= move[1];
+            if (move[0] != -1){
+                arr[move[0]] -= move[1];
+                l = move[0]+1;
+                var msg = "AI has removed " + move[1] + " elements from line " + l + "." + "<br>";
+                document.getElementById("movesMade").innerHTML += msg;
+            } 
             else {
                 console.log("Randomizing");
                 randRow = Math.floor(Math.random() * rows);
@@ -84,7 +94,7 @@ function play(gt, arr, dif) {
                 }
                 let randVal = Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
                 arr[randRow] -= randVal;
-                var msg = "AI has Removed " + randVal + " elements from Line " + randRow + '\n';
+                var msg = "AI has removed " + randVal + " elements from line " + randRow + "." + "<br>";
                 document.getElementById("movesMade").innerHTML += msg;
             }
         } else {
@@ -95,7 +105,7 @@ function play(gt, arr, dif) {
             }
             let randVal = Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
             arr[randRow] -= randVal;
-            var msg = "AI has Removed " + randVal + " elements from Line " + randRow + '\n';
+            var msg = "AI has removed " + randVal + " elements from line " + randRow + "." + "<br>";
             document.getElementById("movesMade").innerHTML += msg;
         }
     } else if (dif == "Hard") {
@@ -103,7 +113,12 @@ function play(gt, arr, dif) {
         if (chance < 0.60) {
             move = getNextMove(gt, arr);
             console.log(move);
-            if (move[0] != -1) arr[move[0]] -= move[1];
+            if (move[0] != -1){
+                arr[move[0]] -= move[1];
+                l = move[0]+1;
+                var msg = "AI has removed " + move[1] + " elements from line " + l + "." + "<br>";
+                document.getElementById("movesMade").innerHTML += msg;
+            } 
             else {
                 console.log("Randomizing");
                 randRow = Math.floor(Math.random() * rows);
@@ -112,7 +127,7 @@ function play(gt, arr, dif) {
                 }
                 let randVal = Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
                 arr[randRow] -= randVal;
-                var msg = "AI has Removed " + randVal + " elements from Line " + randRow + '\n';
+                var msg = "AI has removed " + randVal + " elements from line " + randRow + "." + "<br>";
                 document.getElementById("movesMade").innerHTML += msg;
             }
         } else {
@@ -123,7 +138,7 @@ function play(gt, arr, dif) {
             }
             let randVal = Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
             arr[randRow] -= randVal;
-            var msg = "AI has Removed " + randVal + " elements from Line " + randRow + '\n';
+            var msg = "AI has removed " + randVal + " elements from line " + randRow + "." + "<br>";
             document.getElementById("movesMade").innerHTML += msg;
         }
     }

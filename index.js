@@ -14,6 +14,7 @@ var AIwins = 0;
 var Playerwins = 0;
 var Player1wins = 0;
 var Player2wins = 0;
+var rmCount = 0;
 var lines4 = [1, 3, 5, 7];
 var lines5 = [1, 3, 5, 7, 9];
 var lines6 = [1, 3, 5, 7, 9, 11];
@@ -45,7 +46,7 @@ function Initialize() {
     }
     $('#draw_area').html(draw_element);
     $('.el_fig').css({ 'height': Math.floor(480 / rows - 15) + 'px' });
-    $('.el_fig').click(function () { remove($(this)) });
+    $('.el_fig').click(function () { remove($(this))});
     if (lay == 'Vertical') {
         $('.game_window table').css({ 'margin': 'auto' });
         $('#draw_area').css({ 'transform': 'rotate(0deg)' });
@@ -232,6 +233,7 @@ async function closeClassifications() {
 }
 
 async function remove(element) {
+    rmCount++;
     ElRow = element.attr('data-Rows');
     var el = document.getElementById(element.attr('id'));
     if (inGame) {
@@ -315,6 +317,13 @@ async function endturn() {
             showWinner();
             return;
         }
+        if(opponent == "Player"){
+            var msg = "Player " + turn +  " has removed " + rmCount + " elements from line " + ElRow + "." + "<br>";
+        }else{
+            var msg = "You have removed " + rmCount + " elements from line " + ElRow + "." + "<br>";
+        }
+        document.getElementById("movesMade").innerHTML += msg;
+        rmCount = 0;
         if (turn == 1) turn = 2;
         else turn = 1;
         if (opponent == "AI") {
@@ -348,10 +357,12 @@ function showWinner() {
     var printwinner = '';
     if (turn == 3) printwinner = "You Gave Up";
     else if (turn == 1) {
-        printwinner = "You have won!";
+        //printwinner = "You have won!";
         if (opponent == "AI") {
+            printwinner = "You have won!";
             Playerwins++;
         } else {
+            printwinner = "Player 1 has won!"
             Player1wins++;
         }
     } else {
@@ -359,7 +370,7 @@ function showWinner() {
             printwinner = "The AI has won.";
             AIwins++;
         } else {
-            printwinner = "Your Opponent won.";
+            printwinner = "Player 2 has won!";
             Player2wins++;
         }
     }
