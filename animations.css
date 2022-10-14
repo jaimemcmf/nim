@@ -7,6 +7,7 @@
   border: none;
   border-radius: 10px;
   width: 100%;
+  margin-top: 16px;
 }
 
 /* The container <div> - needed to position the dropdown content */
@@ -23,7 +24,7 @@
 .dropdown-content {
   display: none;
   position: absolute;
-  margin-top: 16%;
+  margin-top: -5px;
   background-color: #f1f1f1;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
@@ -121,13 +122,18 @@ input[type="password"] {
 
 /* Set a style for all buttons */
 .login_submit {
-  background-color: black;
+  background-color: brown;
   color: white;
   padding: 14px 20px;
   margin: 3% 0;
   border: none;
   cursor: pointer;
   width: 100%;
+  border-radius: 10px;
+}
+
+.login_submit:hover {
+  opacity: 0.8;
 }
 
 .el_fig {
@@ -139,6 +145,28 @@ input[type="password"] {
 }
 
 /* Fade out KeyFrames */
+
+/* Fade in KeyFrames */
+@keyframes fade-in {
+  from {
+    opacity: 0%;
+  }
+  
+  to {
+    opacity: 100%;
+  }
+}
+
+@keyframes fade-in2 {
+  from {
+    opacity: 0%;
+  }
+  
+  to {
+    opacity: 40%;
+  }
+}
+
 @keyframes fade-out {
   from {
     opacity: 100%;
@@ -149,13 +177,12 @@ input[type="password"] {
   }
 }
 
-/* Fade in KeyFrames */
-@keyframes fade-in {
+@keyframes fade-out2 {
   from {
-    opacity: 0%;
+    opacity: 40%;
   }
 
   to {
-    opacity: 100%;
+    opacity: 0%;
   }
 }

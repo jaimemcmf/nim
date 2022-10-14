@@ -12,11 +12,13 @@
       integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
       crossorigin="anonymous"
     ></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     <script src="index.js"></script>
     <script src="AI.js"></script>
     <title>Nim Game</title>
   </head>
   <body onload="Initialize()">
+    <div id="exitbackground"></div>
     <div class="header">
       <div class="logo_container">
         <a href="https://en.wikipedia.org/wiki/Nim"><img 
@@ -30,7 +32,7 @@
         <ul>
           <li onclick="showform()">Log In</li>
           <li>|</li>
-          <li>Sign In</li>
+          <li>Sign Up</li>
         </ul>
       </div>
     </div>
@@ -46,13 +48,40 @@
               
             <button type="submit" class="login_submit">Login</button>
           </div>
+          <div id="infopop">
+            <span onclick="closeInfo()" class="close" title="Close Modal">&times;</span>
+            <h1>Configuration Instructions</h1>
+            <hr>
+            <br>
+            <p>Number of Columns/Lines: defines the number of columns/lines in the board.</p>
+            <br>
+            <p>Opponent: defines if you're playing against the Artificial Intelligence or a fellow player.</p>
+            <br>
+            <p>Order: defines who plays first (first if it's you, second if it's the opponent)</p>
+            <br>
+            <p>Difficulty: defines the difficulty of the AI.</p>
+            <ul>
+              <li>Easy: AI plays randomly.</li>
+              <li>Average: high chance of playing randomly.</li>
+              <li>Hard: low chance of playing randomly.</li>
+              <li>Impossible: AI plays perfectly using the NimSum calculation.</li>
+            </ul>
+            <br>
+            <p>Game Type: There are two game types:</p>
+            <ul>
+              <li>Standard: wins the player that takes the last stick of the board.</li>
+              <li>A La Misère: loses the player that takes the last stick of the board.</li>
+            </ul>
+            <br>
+            <p>Layout: defines if the board is horizontal ou vertical. Note that, if the board is vertical, you take from lines and not columns.</p>
+          </div>
           <div id="winnerpop">
             <span onclick="closewinner()" class="close" title="Close Modal">&times;</span>
-            <h1 id="winnerName"></h1>
-            <button onclick="startgame(); closewinner()">New Game</button>
+            <p id="winnerName"></p>
+            <button id="newgamebtn" onclick="startgame(); closewinner()">New Game</button>
           </div>
         <div class="classification">
-          <button class="start" onclick="startgame()" id="startGamebtn">Start Game</button>
+          <button id="start" onclick="startgame()">Start Game</button>
         </div>
 
         <div class="game_window">
@@ -62,10 +91,11 @@
         </div>
 
         <div class="misc">
-          <div class="configurations">
+          <div id="configurations">
+            <p onclick="showInfo()" id="infoicon">Info</p>
             <div class="dropdown">
               <button class="dropbtn" id="dropdownbtn_text1" onmouseover="openDropDown(1)" onmouseout="closeDropDown(1)">
-                Number of Lines - 4
+                Number of Columns - 4
               </button>
               <div class="dropdown-content" id="dropdown-content1" onclick="closeDropDown(1)" onmouseover="openDropDown(1)" onmouseout="closeDropDown(1)">
                 <p onclick="change_table(4)">4</p>
@@ -113,8 +143,7 @@
               </button>
               <div class="dropdown-content" id="dropdown-content5" onclick="closeDropDown(5)" onmouseover="openDropDown(5)" onmouseout="closeDropDown(5)">
                 <p onclick="define_gametype('Default')">Default</p>
-                <p onclick="define_gametype('Misere')">A La Misère</p>
-                
+                <p onclick="define_gametype('A La Misère')">A La Misère</p>
               </div>
             </div>
 

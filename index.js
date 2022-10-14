@@ -5,13 +5,14 @@ var IsAvailable = new Array();
 var rows = 4;
 var opponent = "AI";
 var difficulty = "Easy";
-var ConstTurn;
+var ConstTurn = 1;
 var turn = 1;
 var gtype = "Default";
 var lay = "Horizontal"
 var FirstPlay = true;
 var AllowedRow;
 var mode = 1;
+var inGame = 0;
 var lines4 = [1, 3, 5, 7];
 var lines5 = [1, 3, 5, 7, 9];
 var lines6 = [1, 3, 5, 7, 9, 11];
@@ -67,7 +68,11 @@ function openDropDown(s) {
 
 function change_table(n) {
     rows = n;
-    document.getElementById("dropdownbtn_text1").innerHTML = "Number of Lines - " + n;
+    if(lay == "Vertical"){
+        document.getElementById("dropdownbtn_text1").innerHTML = "Number of Lines - " + n;
+    }else{
+        document.getElementById("dropdownbtn_text1").innerHTML = "Number of Columns - " + n;
+    }
     var dropdownContent = document.getElementById("dropdown-content1");
     dropdownContent.style.display = "none";
 }
@@ -107,17 +112,34 @@ function define_layout(n) {
     document.getElementById("dropdownbtn_text6").innerHTML = "Layout - " + n;
     var dropdownContent = document.getElementById("dropdown-content6");
     dropdownContent.style.display = "none";
+    if(lay == "Vertical"){
+        document.getElementById("dropdownbtn_text1").innerHTML = "Number of Lines - " + rows;
+    }else{
+        document.getElementById("dropdownbtn_text1").innerHTML = "Number of Columns - " + rows;
+    }
 }
 
 async function startgame() {
-    reset();
-    if (turn == 2) {
+    if(inGame == 0){
+        reset();
+    if (turn == 2 && opponent=="AI") {
         play('Default', numberRows(), difficulty);
-        numberRows().sort(function (a, b) { return a - b });
-        await new Promise(r => setTimeout(r, 450));
+        turn = 1;
     }
-    turn = 1;
     Initialize();
+    let btn = document.getElementById("start");
+    btn.innerHTML = "End Game";
+    $("#start").css({"background-color":"brown"});
+    inGame = 1
+    }else{
+        inGame = 0;
+        showWinner();
+        let btn = document.getElementById("start");
+        btn.innerHTML = "Start Game";
+        $("#start").css({"background-color":"black"});
+
+    }
+    
 }
 
 function reset(){
@@ -131,16 +153,45 @@ function reset(){
 
 function showform() {
     var form = document.getElementById("login_form");
-    form.style.display = "block";
+    var div = document.getElementById("exitbackground");
+    div.style.animation="fade-in2 0.4s forwards"
+    div.style.display="block";
     form.style.animation = "fade-in 0.4s forwards";
+    form.style.display = "block";
 }
 
 async function closeform() {
     var form = document.getElementById("login_form");
+    var div = document.getElementById("exitbackground");
+    div.style.animation="fade-out2 0.2s forwards"
     form.style.animation = "fade-out 0.2s forwards";
     await new Promise(r => setTimeout(r, 200));
+    div.style.display="none";
     form.style.display = "none";
 }
+
+function showInfo() {
+    var form = document.getElementById("infopop");
+    var div = document.getElementById("exitbackground");
+    var front = document.getElementById("configurations");
+    front.style.display = "block";
+    front.style.zIndex = 120;
+    div.style.animation="fade-in2 0.4s forwards"
+    div.style.display="block";
+    form.style.display = "block";
+    form.style.animation = "fade-in 0.4s forwards";
+}
+
+async function closeInfo() {
+    var form = document.getElementById("infopop");
+    var div = document.getElementById("exitbackground");
+    div.style.animation="fade-out2 0.2s forwards"
+    form.style.animation = "fade-out 0.2s forwards";
+    await new Promise(r => setTimeout(r, 200));
+    div.style.display="none";
+    form.style.display = "none";
+}
+
 
 
 
@@ -217,13 +268,18 @@ async function remove(element) {
 }
 
 async function endturn() {
-    console.log("Turn: " + turn + " Just pressed End Turn");
-    if(turn == 1) turn = 2;
-    else turn = 1;
+   /* if(turn == 1){
+        console.log("1");
+        turn = 2;  
+    } else {
+        console.log("2");
+        turn = 1;
+    } 
     if (winner('Default', numberRows())) {
         showWinner();
         return;
-    }
+    }*/
+
     if (!FirstPlay) {
         if (turn == 1) turn = 2;
         else turn = 1;
@@ -234,12 +290,8 @@ async function endturn() {
             if (winner('Default', numberRows())) {
                 showWinner();
             }
-            numberRows().sort(function (a, b) { return a - b });
-            await new Promise(r => setTimeout(r, 450));
             Initialize();
         }
-        numberRows().sort(function (a, b) { return a - b });
-        await new Promise(r => setTimeout(r, 450));
         Initialize();
         FirstPlay = true;
     }
@@ -254,38 +306,34 @@ function numberRows() {
 
 function showWinner() {
     var form = document.getElementById("winnerpop");
+
     var printwinner = '';
     if (turn == 1) {
-        printwinner = "You Have Won!";
+        printwinner = "You have won!";
     } else {
         if (opponent == 'AI') {
-            printwinner = "The AI has Won :(";
+            printwinner = "The AI has won.";
         } else {
-            printwinner = "Your Opponent Won :(";
+            printwinner = "Your Opponent won.";
         }
     }
     document.getElementById("winnerName").innerHTML = printwinner;
     form.style.display = "block";
     form.style.animation = "fade-in 0.4s forwards";
+    var div = document.getElementById("exitbackground");
+    div.style.animation="fade-in2 0.4s forwards"
+    div.style.display="block";
 }
 
 async function closewinner() {
+    var div = document.getElementById("exitbackground");
     var form = document.getElementById("winnerpop");
+    div.style.animation="fade-out2 0.2s forwards"
     form.style.animation = "fade-out 0.2s forwards";
     await new Promise(r => setTimeout(r, 200));
     form.style.display = "none";
+    div.style.display="none";
     reset();
     Initialize();
 }
 
-//Instructions
-//Nim is a simple puzzle game that can be played either against AI or other players.
-//The rules are simple: in your turn, you can take as many sticks as you desire, but from only one column at the time.
-
-//Configuration Instructions:
-//Number of Lines (temos que mudar este nome porque o default é number of columns): defines the number of lines in the board.
-//Opponent: defines if you're playing against the Artificial Intelligence or a fellow player.
-//Order: defines who plays first (first if it's you, second if it's the opponent)
-//Difficulty: defines the difficulty of the AI. Easy: AI plays randomly. Hard: AI plays perfectly using the NimSum calculation.
-//Game Type: There are two game types: Standard: wins the player that takes the last stick of the board. A La Misère: loses the player that takes the last stick of the board.
-//Layout: defines if the board is horizontal ou vertical. Note that, if the board is vertical, you take from lines and not columns.
