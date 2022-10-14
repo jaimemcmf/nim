@@ -318,9 +318,9 @@ async function endturn() {
             return;
         }
         if(opponent == "Player"){
-            var msg = "Player " + turn +  " has removed " + rmCount + " elements from line " + ElRow + "." + "<br>";
+            var msg = "Player " + turn +  " has removed " + rmCount + " elements from line " + ElRow + "." + "<br>" + "<br>";
         }else{
-            var msg = "You have removed " + rmCount + " elements from line " + ElRow + "." + "<br>";
+            var msg = "You have removed " + rmCount + " elements from line " + ElRow + "." + "<br>" + "<br>";
         }
         document.getElementById("movesMade").innerHTML += msg;
         rmCount = 0;
