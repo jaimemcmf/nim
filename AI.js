@@ -7,12 +7,12 @@ function nimSum(arr) {
 }
 
 function winner(gt, arr) {
-    var cont = 0;
+    let cont = 0;
     for (i = 0; i < rows; i++) {
         cont += arr[i];
     }
     if (gt == 'Default') {
-        if (cont <= 1) {
+        if (cont == 0) {
             console.log(turn + " has won!");
             return true;
         }
@@ -44,28 +44,35 @@ function getNextMove(gt, arr) {
 }
 
 function play(gt, arr, dif) {
-    if(dif == "Impossible"){
-    move = getNextMove(gt, arr);
-    console.log(move);
-    if (move[0] != -1) arr[move[0]] -= move[1];
-    else {
+
+    if (dif == "Impossible") {
+        move = getNextMove(gt, arr);
+        console.log(move);
+        if (move[0] != -1) arr[move[0]] -= move[1];
+        else {
+            console.log("Randomizing");
+            randRow = Math.floor(Math.random() * rows);
+            while (arr[randRow] == 0) {
+                randRow = Math.floor(Math.random() * rows);
+            }
+            let randVal = Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
+            arr[randRow] -= randVal;
+            var msg = "AI has Removed " + randVal + " elements from Line " + randRow + '\n';
+            document.getElementById("movesMade").innerHTML += msg;
+        }
+    } else if (dif == "Easy") {
         console.log("Randomizing");
         randRow = Math.floor(Math.random() * rows);
         while (arr[randRow] == 0) {
             randRow = Math.floor(Math.random() * rows);
         }
-        arr[randRow] -= Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
-    }
-    }else if(dif == "Easy"){
-        console.log("Randomizing");
-        randRow = Math.floor(Math.random() * rows);
-        while (arr[randRow] == 0) {
-            randRow = Math.floor(Math.random() * rows);
-        }
-        arr[randRow] -= Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
-    }else if(dif == "Average"){
+        let randVal = Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
+        arr[randRow] -= randVal;
+        var msg = "AI has Removed " + randVal + " elements from Line " + randRow + '\n';
+        document.getElementById("movesMade").innerHTML += msg;
+    } else if (dif == "Average") {
         var chance = Math.random();
-        if(chance < 0.3){
+        if (chance < 0.3) {
             move = getNextMove(gt, arr);
             console.log(move);
             if (move[0] != -1) arr[move[0]] -= move[1];
@@ -75,19 +82,25 @@ function play(gt, arr, dif) {
                 while (arr[randRow] == 0) {
                     randRow = Math.floor(Math.random() * rows);
                 }
-                arr[randRow] -= Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
+                let randVal = Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
+                arr[randRow] -= randVal;
+                var msg = "AI has Removed " + randVal + " elements from Line " + randRow + '\n';
+                document.getElementById("movesMade").innerHTML += msg;
             }
-        }else{
-        console.log("Randomizing");
-        randRow = Math.floor(Math.random() * rows);
-        while (arr[randRow] == 0) {
+        } else {
+            console.log("Randomizing");
             randRow = Math.floor(Math.random() * rows);
+            while (arr[randRow] == 0) {
+                randRow = Math.floor(Math.random() * rows);
+            }
+            let randVal = Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
+            arr[randRow] -= randVal;
+            var msg = "AI has Removed " + randVal + " elements from Line " + randRow + '\n';
+            document.getElementById("movesMade").innerHTML += msg;
         }
-        arr[randRow] -= Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
-        }
-    }else if(dif == "Hard"){
+    } else if (dif == "Hard") {
         var chance = Math.random();
-        if(chance < 0.60){
+        if (chance < 0.60) {
             move = getNextMove(gt, arr);
             console.log(move);
             if (move[0] != -1) arr[move[0]] -= move[1];
@@ -97,15 +110,21 @@ function play(gt, arr, dif) {
                 while (arr[randRow] == 0) {
                     randRow = Math.floor(Math.random() * rows);
                 }
-                arr[randRow] -= Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
+                let randVal = Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
+                arr[randRow] -= randVal;
+                var msg = "AI has Removed " + randVal + " elements from Line " + randRow + '\n';
+                document.getElementById("movesMade").innerHTML += msg;
             }
-        }else{
-        console.log("Randomizing");
-        randRow = Math.floor(Math.random() * rows);
-        while (arr[randRow] == 0) {
+        } else {
+            console.log("Randomizing");
             randRow = Math.floor(Math.random() * rows);
-        }
-        arr[randRow] -= Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
+            while (arr[randRow] == 0) {
+                randRow = Math.floor(Math.random() * rows);
+            }
+            let randVal = Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
+            arr[randRow] -= randVal;
+            var msg = "AI has Removed " + randVal + " elements from Line " + randRow + '\n';
+            document.getElementById("movesMade").innerHTML += msg;
         }
     }
 }

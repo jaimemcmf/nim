@@ -69,9 +69,9 @@ function openDropDown(s) {
 
 function change_table(n) {
     rows = n;
-    if(lay == "Vertical"){
+    if (lay == "Vertical") {
         document.getElementById("dropdownbtn_text1").innerHTML = "Number of Lines - " + n;
-    }else{
+    } else {
         document.getElementById("dropdownbtn_text1").innerHTML = "Number of Columns - " + n;
     }
     var dropdownContent = document.getElementById("dropdown-content1");
@@ -113,48 +113,50 @@ function define_layout(n) {
     document.getElementById("dropdownbtn_text6").innerHTML = "Layout - " + n;
     var dropdownContent = document.getElementById("dropdown-content6");
     dropdownContent.style.display = "none";
-    if(lay == "Vertical"){
+    if (lay == "Vertical") {
         document.getElementById("dropdownbtn_text1").innerHTML = "Number of Lines - " + rows;
-    }else{
+    } else {
         document.getElementById("dropdownbtn_text1").innerHTML = "Number of Columns - " + rows;
     }
 }
 
 async function startgame() {
-    if(inGame == 0){
+    if (inGame == 0) {
         reset();
-    if (turn == 2 && opponent=="AI") {
-        play('Default', numberRows(), difficulty);
-        turn = 1;
-    }
-    Initialize();
-    let btn = document.getElementById("start");
-    btn.innerHTML = "End Game";
-    $("#start").css({"background-color":"brown"});
-    inGame = 1
-    }else{
+        if (turn == 2 && opponent == "AI") {
+            play('Default', numberRows(), difficulty);
+            turn = 1;
+        }
+        Initialize();
+        let btn = document.getElementById("start");
+        btn.innerHTML = "End Game";
+        $("#start").css({ "background-color": "brown" });
+        inGame = 1
+    } else {
         inGame = 0;
+        turn = 3;
         showWinner();
         let btn = document.getElementById("start");
         btn.innerHTML = "Start Game";
-        $("#start").css({"background-color":"black"});
+        $("#start").css({ "background-color": "black" });
     }
 }
 
-function reset(){
+function reset() {
     lines4 = [1, 3, 5, 7];
     lines5 = [1, 3, 5, 7, 9];
     lines6 = [1, 3, 5, 7, 9, 11];
     lines7 = [1, 3, 5, 7, 9, 11, 13];
     turn = ConstTurn;
     FirstPlay = true;
+    document.getElementById("movesMade").innerHTML = "";
 }
 
 function showform() {
     var form = document.getElementById("login_form");
     var div = document.getElementById("exitbackground");
-    div.style.animation="fade-in2 0.4s forwards"
-    div.style.display="block";
+    div.style.animation = "fade-in2 0.4s forwards"
+    div.style.display = "block";
     form.style.animation = "fade-in 0.4s forwards";
     form.style.display = "block";
 }
@@ -162,10 +164,10 @@ function showform() {
 async function closeform() {
     var form = document.getElementById("login_form");
     var div = document.getElementById("exitbackground");
-    div.style.animation="fade-out2 0.2s forwards"
+    div.style.animation = "fade-out2 0.2s forwards"
     form.style.animation = "fade-out 0.2s forwards";
     await new Promise(r => setTimeout(r, 200));
-    div.style.display="none";
+    div.style.display = "none";
     form.style.display = "none";
 }
 
@@ -175,8 +177,8 @@ function showInfo() {
     var front = document.getElementById("configurations");
     front.style.display = "block";
     front.style.zIndex = 120;
-    div.style.animation="fade-in2 0.4s forwards"
-    div.style.display="block";
+    div.style.animation = "fade-in2 0.4s forwards"
+    div.style.display = "block";
     form.style.display = "block";
     form.style.animation = "fade-in 0.4s forwards";
 }
@@ -184,10 +186,10 @@ function showInfo() {
 async function closeInfo() {
     var form = document.getElementById("infopop");
     var div = document.getElementById("exitbackground");
-    div.style.animation="fade-out2 0.2s forwards"
+    div.style.animation = "fade-out2 0.2s forwards"
     form.style.animation = "fade-out 0.2s forwards";
     await new Promise(r => setTimeout(r, 200));
-    div.style.display="none";
+    div.style.display = "none";
     form.style.display = "none";
 }
 
@@ -209,13 +211,17 @@ async function closeRules() {
 function showClassifications() {
     var form = document.getElementById("classificationspop");
     var hide = document.getElementById("rulespop");
+    updateClassifications();
+    hide.style.display = "none";
+    form.style.display = "block";
+    form.style.animation = "fade-in 0.4s forwards";
+}
+
+function updateClassifications() {
     document.getElementById("aiscore").innerHTML = AIwins;
     document.getElementById("playerAIscore").innerHTML = Playerwins;
     document.getElementById("playeronescore").innerHTML = Player1wins;
     document.getElementById("playertwoscore").innerHTML = Player2wins;
-    hide.style.display = "none"; 
-    form.style.display = "block";
-    form.style.animation = "fade-in 0.4s forwards";
 }
 
 async function closeClassifications() {
@@ -228,7 +234,7 @@ async function closeClassifications() {
 async function remove(element) {
     ElRow = element.attr('data-Rows');
     var el = document.getElementById(element.attr('id'));
-    if(inGame){
+    if (inGame) {
         if (rows == 4) {
             if (FirstPlay) {
                 el.style.animation = "fade-out 0.2s forwards";
@@ -301,16 +307,29 @@ async function remove(element) {
 
 async function endturn() {
     if (!FirstPlay) {
+        if (winner('Default', numberRows())) {
+            inGame = 0;
+            let btn = document.getElementById("start");
+            btn.innerHTML = "Start Game";
+            $("#start").css({ "background-color": "black" });
+            showWinner();
+            return;
+        }
         if (turn == 1) turn = 2;
         else turn = 1;
         if (opponent == "AI") {
             //if Player vs AI
             play('Default', numberRows(), difficulty);
-            turn = 1;
+            Initialize()
             if (winner('Default', numberRows())) {
+                inGame = 0;
+                let btn = document.getElementById("start");
+                btn.innerHTML = "Start Game";
+                $("#start").css({ "background-color": "black" });
                 showWinner();
+                return;
             }
-            Initialize();
+            turn = 1;
         }
         Initialize();
         FirstPlay = true;
@@ -327,11 +346,12 @@ function numberRows() {
 function showWinner() {
     var form = document.getElementById("winnerpop");
     var printwinner = '';
-    if (turn == 1) {
+    if (turn == 3) printwinner = "You Gave Up";
+    else if (turn == 1) {
         printwinner = "You have won!";
-        if(opponent == "AI"){
+        if (opponent == "AI") {
             Playerwins++;
-        }else{
+        } else {
             Player1wins++;
         }
     } else {
@@ -347,18 +367,19 @@ function showWinner() {
     form.style.display = "block";
     form.style.animation = "fade-in 0.4s forwards";
     var div = document.getElementById("exitbackground");
-    div.style.animation="fade-in2 0.4s forwards"
-    div.style.display="block";
+    div.style.animation = "fade-in2 0.4s forwards"
+    div.style.display = "block";
+    updateClassifications();
 }
 
 async function closewinner() {
     var div = document.getElementById("exitbackground");
     var form = document.getElementById("winnerpop");
-    div.style.animation="fade-out2 0.2s forwards"
+    div.style.animation = "fade-out2 0.2s forwards"
     form.style.animation = "fade-out 0.2s forwards";
     await new Promise(r => setTimeout(r, 200));
     form.style.display = "none";
-    div.style.display="none";
+    div.style.display = "none";
     reset();
     Initialize();
 }
