@@ -419,3 +419,17 @@ async function closewinner() {
     Initialize();
 }
 
+
+// Animações butão Start
+
+function startHoverIn(){
+    if(inGame == 0){
+        $("#start").css({"background-color": "brown"});
+    }
+}
+
+function startHoverOut(){
+    if(inGame == 0){
+        $("#start").css({"background-color": "black"});
+    }
+}
