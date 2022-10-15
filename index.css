@@ -72,6 +72,11 @@ html {
   border-radius: 10px;
 }
 
+#misc {
+  display: inline-block;
+  border-radius: 10px;
+}
+
 .start_messages {
   width: 18%;
   margin-right: 50px;
@@ -96,7 +101,7 @@ html {
   height: 90%;
 }
 
-.misc {
+#misc {
   width: 18%;
   border: none;
 }

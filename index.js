@@ -149,6 +149,8 @@ async function startgame() {
         Initialize();
         let btn = document.getElementById("start");
         btn.innerHTML = "End Game";
+        //els = document.getElementById("misc");
+        //els.style.display = "none";
         $("#start").css({ "background-color": "brown" });
         inGame = 1
     } else {
@@ -157,6 +159,8 @@ async function startgame() {
         showWinner();
         let btn = document.getElementById("start");
         btn.innerHTML = "Start Game";
+        //els = document.getElementById("misc");
+        //els.style.display = "inline-block";
         $("#start").css({ "background-color": "black" });
     }
 }
