@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="index.css" />
-    <link rel="stylesheet" href="animations.css" />
+    <meta charset= UTF-8>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="animations.css">
     <link rel="icon" href="assets/favicon.ico">
     <script
       src="https://code.jquery.com/jquery-3.6.1.js"
@@ -25,8 +25,7 @@
           src="assets/logo2.png"
           alt=""
           class="logo"
-          
-        /></a>
+          ></a>
       </div>
       <div class="login">
         <ul>
@@ -41,10 +40,10 @@
         <div id="login_form">
             <span onclick="closeform()" class="close" title="Close Modal">&times;</span>
             <label for="uname"><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" name="uname" required>
+            <input type="text" placeholder="Enter Username" id="uname" required>
       
             <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="psw" required>
+            <input type="password" placeholder="Enter Password" id="psw" required>
               
             <button type="submit" class="login_submit">Login</button>
           </div>
@@ -70,7 +69,7 @@
             <p>Game Type: There are two game types:</p>
             <ul>
               <li>Standard: wins the player that takes the last stick of the board.</li>
-              <li>A La Misère: loses the player that takes the last stick of the board.</li>
+              <li><a href="https://en.wikipedia.org/wiki/Mis%C3%A8re#Mis%C3%A8re_game">A La Misère</a>: loses the player that takes the last stick of the board.</li>
             </ul>
             <br>
             <p>Layout: defines if the board is horizontal ou vertical. Note that, if the board is vertical, you take from lines and not columns.</p>
@@ -82,7 +81,9 @@
           </div>
         <div class="start_messages">
           <button id="start" onclick="startgame()">Start Game</button>
-          <div id="movesMade"></div>
+          <div id="messagesdiv">
+            <div id="movesMade"></div>
+          </div>
         </div>
 
         <div class="game_window">
@@ -144,7 +145,7 @@
               </button>
               <div class="dropdown-content" id="dropdown-content5" onclick="closeDropDown(5)" onmouseover="openDropDown(5)" onmouseout="closeDropDown(5)">
                 <p onclick="define_gametype('Default')">Default</p>
-                <p onclick="define_gametype('A La Misère')">A La Misère</p>
+                <p onclick="define_gametype('À Lá Misère')">À Lá Misère</p>
               </div>
             </div>
 
@@ -172,14 +173,14 @@
               <br>
               <h3>Player vs AI</h3>
               <br>
-              <p>Player: &nbsp;<p id="playerAIscore"></p></p>
-              <p>AI: &nbsp;<p id="aiscore"></p></p>
+              <div style="display: inline-block;">Player: &nbsp;<p id="playerAIscore">0</p></div>
+              <div style="display: inline-block;">AI: &nbsp;<p id="aiscore">0</p></div>
               <br>
               <br>
               <h3>Player 1 vs Player 2</h3>
               <br>
-              <p>Player 1: &nbsp;<p id="playeronescore"></p>
-              <p>Player 2: &nbsp;<p id="playertwoscore"></p>
+              <div style="display: inline-block;">Player 1: &nbsp;<p id="playeronescore">0</p></div>
+              <div style="display: inline-block;">Player 2: &nbsp;<p id="playertwoscore">0</p></div>
             </div>
             <div id="rulespop">
               <span onclick="closeRules()" class="close" title="Close Modal">&times;</span>

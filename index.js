@@ -57,15 +57,26 @@ function Initialize() {
 
 
 function closeDropDown(s) {
-    id = "dropdown-content" + s;
-    var dropdownContent = document.getElementById(id);
-    dropdownContent.style.display = "none";
+    if((s == 4 && opponent == "AI") || s != 4){
+        id = "dropdown-content" + s;
+        var dropdownContent = document.getElementById(id);
+        dropdownContent.style.display = "none";
+        var dropdownbtn = document.getElementById(("dropdownbtn_text" + s));
+        dropdownbtn.style.backgroundColor = "black";
+    }
 }
 
 function openDropDown(s) {
-    id = "dropdown-content" + s;
-    var dropdownContent = document.getElementById(id);
-    dropdownContent.style.display = "block";
+    if((s == 4 && opponent == "AI") || s != 4){
+        id = "dropdown-content" + s;
+        var dropdownContent = document.getElementById(id);
+        dropdownContent.style.display = "block";
+        var dropdownbtn = document.getElementById(("dropdownbtn_text" + s));
+        dropdownbtn.style.backgroundColor = "brown";
+    }else{
+        var dropdownbtn = document.getElementById("dropdownbtn_text4");
+        dropdownbtn.style.backgroundColor = "gray";
+    }
 }
 
 function change_table(n) {
@@ -81,6 +92,13 @@ function change_table(n) {
 
 function define_opponent(n) {
     opponent = n;
+    if(opponent == "Player"){
+        var dropdownbtn = document.getElementById("dropdownbtn_text4");
+        dropdownbtn.style.backgroundColor = "gray";
+    }else{
+        var dropdownbtn = document.getElementById("dropdownbtn_text4");
+        dropdownbtn.style.backgroundColor = "black";
+    }
     document.getElementById("dropdownbtn_text2").innerHTML = "Opponent - " + n;
     var dropdownContent = document.getElementById("dropdown-content2");
     dropdownContent.style.display = "none";
@@ -103,7 +121,7 @@ function define_difficulty(n) {
 }
 
 function define_gametype(n) {
-    gametype = n;
+    gtype = n;
     document.getElementById("dropdownbtn_text5").innerHTML = "Gametype - " + n;
     var dropdownContent = document.getElementById("dropdown-content5");
     dropdownContent.style.display = "none";
@@ -125,7 +143,7 @@ async function startgame() {
     if (inGame == 0) {
         reset();
         if (turn == 2 && opponent == "AI") {
-            play('Default', numberRows(), difficulty);
+            play(gtype, numberRows(), difficulty);
             turn = 1;
         }
         Initialize();
@@ -309,7 +327,7 @@ async function remove(element) {
 
 async function endturn() {
     if (!FirstPlay) {
-        if (winner('Default', numberRows())) {
+        if (winner(gtype, numberRows())) {
             inGame = 0;
             let btn = document.getElementById("start");
             btn.innerHTML = "Start Game";
@@ -317,20 +335,22 @@ async function endturn() {
             showWinner();
             return;
         }
+        ElRow++;
         if(opponent == "Player"){
             var msg = "Player " + turn +  " has removed " + rmCount + " elements from line " + ElRow + "." + "<br>" + "<br>";
         }else{
             var msg = "You have removed " + rmCount + " elements from line " + ElRow + "." + "<br>" + "<br>";
         }
-        document.getElementById("movesMade").innerHTML += msg;
+        document.getElementById("movesMade").innerHTML = msg + document.getElementById("movesMade").innerHTML;
         rmCount = 0;
         if (turn == 1) turn = 2;
         else turn = 1;
         if (opponent == "AI") {
             //if Player vs AI
-            play('Default', numberRows(), difficulty);
+            await new Promise(r => setTimeout(r, 500));
+            play(gtype, numberRows(), difficulty);
             Initialize()
-            if (winner('Default', numberRows())) {
+            if (winner(gtype, numberRows())) {
                 inGame = 0;
                 let btn = document.getElementById("start");
                 btn.innerHTML = "Start Game";
