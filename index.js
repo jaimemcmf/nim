@@ -46,7 +46,7 @@ function Initialize() {
     }
     $('#draw_area').html(draw_element);
     $('.el_fig').css({ 'height': Math.floor(480 / rows - 15) + 'px' });
-    $('.el_fig').click(function () { remove($(this))});
+    $('.el_fig').click(function () { remove($(this)) });
     if (lay == 'Vertical') {
         $('.game_window table').css({ 'margin': 'auto' });
         $('#draw_area').css({ 'transform': 'rotate(0deg)' });
@@ -57,7 +57,7 @@ function Initialize() {
 
 
 function closeDropDown(s) {
-    if((s == 4 && opponent == "AI") || s != 4){
+    if ((s == 4 && opponent == "AI") || s != 4) {
         id = "dropdown-content" + s;
         var dropdownContent = document.getElementById(id);
         dropdownContent.style.display = "none";
@@ -67,13 +67,13 @@ function closeDropDown(s) {
 }
 
 function openDropDown(s) {
-    if((s == 4 && opponent == "AI") || s != 4){
+    if ((s == 4 && opponent == "AI") || s != 4) {
         id = "dropdown-content" + s;
         var dropdownContent = document.getElementById(id);
         dropdownContent.style.display = "block";
         var dropdownbtn = document.getElementById(("dropdownbtn_text" + s));
         dropdownbtn.style.backgroundColor = "brown";
-    }else{
+    } else {
         var dropdownbtn = document.getElementById("dropdownbtn_text4");
         dropdownbtn.style.backgroundColor = "gray";
     }
@@ -92,10 +92,10 @@ function change_table(n) {
 
 function define_opponent(n) {
     opponent = n;
-    if(opponent == "Player"){
+    if (opponent == "Player") {
         var dropdownbtn = document.getElementById("dropdownbtn_text4");
         dropdownbtn.style.backgroundColor = "gray";
-    }else{
+    } else {
         var dropdownbtn = document.getElementById("dropdownbtn_text4");
         dropdownbtn.style.backgroundColor = "black";
     }
@@ -154,6 +154,7 @@ async function startgame() {
         $("#start").css({ "background-color": "brown" });
         inGame = 1
     } else {
+        rmCount = 0;
         inGame = 0;
         turn = 3;
         showWinner();
@@ -173,6 +174,7 @@ function reset() {
     turn = ConstTurn;
     FirstPlay = true;
     document.getElementById("movesMade").innerHTML = "";
+    rmCount = 0;
 }
 
 function showform() {
@@ -340,9 +342,9 @@ async function endturn() {
             return;
         }
         ElRow++;
-        if(opponent == "Player"){
-            var msg = "Player " + turn +  " has removed " + rmCount + " elements from line " + ElRow + "." + "<br>" + "<br>";
-        }else{
+        if (opponent == "Player") {
+            var msg = "Player " + turn + " has removed " + rmCount + " elements from line " + ElRow + "." + "<br>" + "<br>";
+        } else {
             var msg = "You have removed " + rmCount + " elements from line " + ElRow + "." + "<br>" + "<br>";
         }
         document.getElementById("movesMade").innerHTML = msg + document.getElementById("movesMade").innerHTML;
@@ -422,14 +424,14 @@ async function closewinner() {
 
 // Animações butão Start
 
-function startHoverIn(){
-    if(inGame == 0){
-        $("#start").css({"background-color": "brown"});
+function startHoverIn() {
+    if (inGame == 0) {
+        $("#start").css({ "background-color": "brown" });
     }
 }
 
-function startHoverOut(){
-    if(inGame == 0){
-        $("#start").css({"background-color": "black"});
+function startHoverOut() {
+    if (inGame == 0) {
+        $("#start").css({ "background-color": "black" });
     }
 }
