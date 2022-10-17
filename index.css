@@ -9,6 +9,14 @@ a {
 
 }
 
+a:hover {
+  color: brown;
+}
+
+.rr {
+  text-decoration: none;
+}
+
 body{
   background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)),
     url("por_do_sol.jpg");

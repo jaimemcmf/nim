@@ -89,7 +89,7 @@ function play(gt, arr, dif) {
             }
             let randVal = Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
             arr[randRow] -= randVal;
-            var msg = "AI has removed " + randVal + " elements from line " + randRow + "." + "<br>" + "<br>";
+            var msg = "AI has removed " + randVal + " elements from line " + (randRow+1) + "." + "<br>" + "<br>";
             document.getElementById("movesMade").innerHTML = msg + document.getElementById("movesMade").innerHTML;
         }
     } else if (dif == "Easy") {
@@ -100,7 +100,7 @@ function play(gt, arr, dif) {
         }
         let randVal = Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
         arr[randRow] -= randVal;
-        var msg = "AI has removed " + randVal + " elements from line " + randRow + "." + "<br>" + "<br>";
+        var msg = "AI has removed " + randVal + " elements from line " + (randRow+1) + "." + "<br>" + "<br>";
         document.getElementById("movesMade").innerHTML = msg + document.getElementById("movesMade").innerHTML;
     } else if (dif == "Average") {
         var chance = Math.random();
@@ -121,7 +121,7 @@ function play(gt, arr, dif) {
                 }
                 let randVal = Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
                 arr[randRow] -= randVal;
-                var msg = "AI has removed " + randVal + " elements from line " + randRow + "." + "<br>" + "<br>";
+                var msg = "AI has removed " + randVal + " elements from line " + (randRow+1) + "." + "<br>" + "<br>";
                 document.getElementById("movesMade").innerHTML = msg + document.getElementById("movesMade").innerHTML;
             }
         } else {
@@ -132,7 +132,7 @@ function play(gt, arr, dif) {
             }
             let randVal = Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
             arr[randRow] -= randVal;
-            var msg = "AI has removed " + randVal + " elements from line " + randRow + "." + "<br>" + "<br>";
+            var msg = "AI has removed " + randVal + " elements from line " + (randRow+1) + "." + "<br>" + "<br>";
             document.getElementById("movesMade").innerHTML = msg + document.getElementById("movesMade").innerHTML;
         }
     } else if (dif == "Hard") {
@@ -154,7 +154,7 @@ function play(gt, arr, dif) {
                 }
                 let randVal = Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
                 arr[randRow] -= randVal;
-                var msg = "AI has removed " + randVal + " elements from line " + randRow + "." + "<br>" + "<br>";
+                var msg = "AI has removed " + randVal + " elements from line " + (randRow+1) + "." + "<br>" + "<br>";
                 document.getElementById("movesMade").innerHTML = msg + document.getElementById("movesMade").innerHTML;
             }
         } else {
@@ -165,7 +165,7 @@ function play(gt, arr, dif) {
             }
             let randVal = Math.floor(Math.random() * (arr[randRow] - 1)) + 1;
             arr[randRow] -= randVal;
-            var msg = "AI has removed " + randVal + " elements from line " + randRow + "." + "<br>" + "<br>";
+            var msg = "AI has removed " + randVal + " elements from line " + (randRow+1) + "." + "<br>" + "<br>";
             document.getElementById("movesMade").innerHTML = msg + document.getElementById("movesMade").innerHTML;
         }
     }

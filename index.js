@@ -427,11 +427,15 @@ async function closewinner() {
 function startHoverIn() {
     if (inGame == 0) {
         $("#start").css({ "background-color": "brown" });
+    }else{
+        $("#start").css({ "background-color": "rgb(57, 4, 4)" });
     }
 }
 
 function startHoverOut() {
     if (inGame == 0) {
         $("#start").css({ "background-color": "black" });
+    }else{
+        $("#start").css({ "background-color": "brown" });
     }
 }
