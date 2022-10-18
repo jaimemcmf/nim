@@ -31,21 +31,39 @@
         <ul>
           <li onclick="showform()">Log In</li>
           <li><a class="rr" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">|</a></li>
-          <li>Sign Up</li>
+          <li onclick="showsignupform()">Sign Up</li>
         </ul>
       </div>
     </div>
-
       <div class="main_window">
         <div id="login_form">
             <span onclick="closeform()" class="close" title="Close Modal">&times;</span>
+            <h1>Log In</h1>
             <label for="uname"><b>Username</b></label>
             <input type="text" placeholder="Enter Username" id="uname" required>
       
             <label for="psw"><b>Password</b></label>
             <input type="password" placeholder="Enter Password" id="psw" required>
+
+            <p>Don't have an account? Sign up.</p>
               
             <button type="submit" class="login_submit">Login</button>
+          </div>
+          <div id="signup_form">
+            <span onclick="closesignupform()" class="close" title="Close Modal">&times;</span>
+            <h1>Sign Up</h1>
+            <label for="uname"><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" id="uname" required>
+  
+            <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" id="psw" required>
+
+            <label for="psw"><b>Confirm password</b></label>
+            <input type="password" placeholder="Enter Password" id="psw" required>
+
+            <p>Already have an account? Log in.</p>
+              
+            <button type="submit" class="login_submit">Sign Up</button>
           </div>
           <div id="infopop">
             <span onclick="closeInfo()" class="close" title="Close Modal">&times;</span>
@@ -85,13 +103,11 @@
             <div id="movesMade"></div>
           </div>
         </div>
-
         <div class="game_window">
           <button onclick="endturn()" class='nextTurnBtn'>Next Turn</button>
           
           <div id="draw_area">Loading</div>
         </div>
-
         <div id="misc">
           <div id="configurations">
             <i class="fa-solid fa-circle-info" id="infoicon" onclick="showInfo()"></i>
@@ -106,7 +122,6 @@
                 <p onclick="change_table(7)">7</p>
               </div>
             </div>
-
             <div class="dropdown">
               <button class="dropbtn" id="dropdownbtn_text2" onmouseover="openDropDown(2)" onmouseout="closeDropDown(2)">
                 Opponent - AI
@@ -148,7 +163,6 @@
                 <p onclick="define_gametype('À Lá Misère')">À Lá Misère</p>
               </div>
             </div>
-
             <div class="dropdown">
               <button class="dropbtn" id="dropdownbtn_text6" onmouseover="openDropDown(6)" onmouseout="closeDropDown(6)">
                 Layout - Horizontal
@@ -156,11 +170,9 @@
               <div class="dropdown-content" id="dropdown-content6" onclick="closeDropDown(6)" onmouseover="openDropDown(6)" onmouseout="closeDropDown(6)">
                 <p onclick="define_layout('Horizontal')">Horizontal</p>
                 <p onclick="define_layout('Vertical')">Vertical</p>
-                
               </div>
             </div>
           </div>
-
           <div class="rules_classifications">
             <div class="rulesclassificationsbtns">
               <button id="classificationsbtn" onclick="showClassifications()">Classifications</button>

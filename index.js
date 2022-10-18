@@ -4,6 +4,7 @@ var opponent = "AI";
 var difficulty = "Easy";
 var ConstTurn = 1;
 var turn = 1;
+var loserbyforfeit;
 var gtype = "Default";
 var lay = "Horizontal"
 var FirstPlay = true;
@@ -149,19 +150,16 @@ async function startgame() {
         Initialize();
         let btn = document.getElementById("start");
         btn.innerHTML = "End Game";
-        //els = document.getElementById("misc");
-        //els.style.display = "none";
         $("#start").css({ "background-color": "brown" });
         inGame = 1
     } else {
         rmCount = 0;
         inGame = 0;
+        loserbyforfeit = turn;
         turn = 3;
         showWinner();
         let btn = document.getElementById("start");
         btn.innerHTML = "Start Game";
-        //els = document.getElementById("misc");
-        //els.style.display = "inline-block";
         $("#start").css({ "background-color": "black" });
     }
 }
@@ -188,6 +186,25 @@ function showform() {
 
 async function closeform() {
     var form = document.getElementById("login_form");
+    var div = document.getElementById("exitbackground");
+    div.style.animation = "fade-out2 0.2s forwards"
+    form.style.animation = "fade-out 0.2s forwards";
+    await new Promise(r => setTimeout(r, 200));
+    div.style.display = "none";
+    form.style.display = "none";
+}
+
+function showsignupform() {
+    var form = document.getElementById("signup_form");
+    var div = document.getElementById("exitbackground");
+    div.style.animation = "fade-in2 0.4s forwards"
+    div.style.display = "block";
+    form.style.animation = "fade-in 0.4s forwards";
+    form.style.display = "block";
+}
+
+async function closesignupform() {
+    var form = document.getElementById("signup_form");
     var div = document.getElementById("exitbackground");
     div.style.animation = "fade-out2 0.2s forwards"
     form.style.animation = "fade-out 0.2s forwards";
@@ -381,9 +398,20 @@ function numberRows() {
 function showWinner() {
     var form = document.getElementById("winnerpop");
     var printwinner = '';
-    if (turn == 3) printwinner = "You Gave Up";
-    else if (turn == 1) {
-        //printwinner = "You have won!";
+    if (turn == 3){
+        if(opponent == "AI"){
+            printwinner = "You have forfeited the game. AI wins the game."
+            AIwins++;
+        }else{
+            if(loserbyforfeit == 1){
+                printwinner = "You have forfeited the game. Player 2 wins the game."
+                Player2wins++;
+            }else{
+                printwinner = "You have forfeited the game. Player 1 wins the game."
+                Player1wins++;
+            }
+        }
+    }else if (turn == 1) {
         if (opponent == "AI") {
             printwinner = "You have won!";
             Playerwins++;
