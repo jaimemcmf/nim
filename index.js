@@ -151,7 +151,9 @@ async function startgame() {
         let btn = document.getElementById("start");
         btn.innerHTML = "End Game";
         $("#start").css({ "background-color": "brown" });
-        inGame = 1
+        inGame = 1;
+        var ntbtn = document.getElementById("nextTurnBtn");
+        ntbtn.style.display = "block";
     } else {
         rmCount = 0;
         inGame = 0;
@@ -218,7 +220,7 @@ function showInfo() {
     var div = document.getElementById("exitbackground");
     var front = document.getElementById("configurations");
     front.style.display = "block";
-    front.style.zIndex = 120;
+    front.style.zIndex = 4;
     div.style.animation = "fade-in2 0.4s forwards"
     div.style.display = "block";
     form.style.display = "block";
@@ -228,6 +230,8 @@ function showInfo() {
 async function closeInfo() {
     var form = document.getElementById("infopop");
     var div = document.getElementById("exitbackground");
+    var front = document.getElementById("configurations");
+    front.style.zIndex = 2;
     div.style.animation = "fade-out2 0.2s forwards"
     form.style.animation = "fade-out 0.2s forwards";
     await new Promise(r => setTimeout(r, 200));
@@ -274,7 +278,6 @@ async function closeClassifications() {
 }
 
 async function remove(element) {
-    rmCount++;
     ElRow = element.attr('data-Rows');
     var el = document.getElementById(element.attr('id'));
     if (inGame) {
@@ -284,6 +287,7 @@ async function remove(element) {
                 await new Promise(r => setTimeout(r, 200));
                 AllowedRow = ElRow;
                 lines4[ElRow] -= 1;
+                rmCount++;
                 Initialize();
                 FirstPlay = false;
             } else {
@@ -291,6 +295,7 @@ async function remove(element) {
                     el.style.animation = "fade-out 0.2s forwards";
                     await new Promise(r => setTimeout(r, 200));
                     lines4[ElRow] -= 1;
+                    rmCount++;
                     Initialize();
                 }
             }
@@ -300,6 +305,7 @@ async function remove(element) {
                 await new Promise(r => setTimeout(r, 200));
                 AllowedRow = ElRow;
                 lines5[ElRow] -= 1;
+                rmCount++;
                 Initialize();
                 FirstPlay = false;
             } else {
@@ -307,6 +313,7 @@ async function remove(element) {
                     el.style.animation = "fade-out 0.2s forwards";
                     await new Promise(r => setTimeout(r, 200));
                     lines5[ElRow] -= 1;
+                    rmCount++;
                     Initialize();
                 }
             }
@@ -316,6 +323,7 @@ async function remove(element) {
                 await new Promise(r => setTimeout(r, 200));
                 AllowedRow = ElRow;
                 lines6[ElRow] -= 1;
+                rmCount++;
                 Initialize();
                 FirstPlay = false;
             } else {
@@ -323,6 +331,7 @@ async function remove(element) {
                     el.style.animation = "fade-out 0.2s forwards";
                     await new Promise(r => setTimeout(r, 200));
                     lines6[ElRow] -= 1;
+                    rmCount++;
                     Initialize();
                 }
             }
@@ -332,6 +341,7 @@ async function remove(element) {
                 await new Promise(r => setTimeout(r, 200));
                 AllowedRow = ElRow;
                 lines7[ElRow] -= 1;
+                rmCount++;
                 Initialize();
                 FirstPlay = false;
             } else {
@@ -339,6 +349,7 @@ async function remove(element) {
                     el.style.animation = "fade-out 0.2s forwards";
                     await new Promise(r => setTimeout(r, 200));
                     lines7[ElRow] -= 1;
+                    rmCount++;
                     Initialize();
                 }
             }
@@ -358,11 +369,12 @@ async function endturn() {
             showWinner();
             return;
         }
-        ElRow++;
+        var temp = AllowedRow;
+        temp++;
         if (opponent == "Player") {
-            var msg = "Player " + turn + " has removed " + rmCount + " elements from line " + ElRow + "." + "<br>" + "<br>";
+            var msg = "Player " + turn + " has removed " + rmCount + " elements from line " + temp + "." + "<br>" + "<br>";
         } else {
-            var msg = "You have removed " + rmCount + " elements from line " + ElRow + "." + "<br>" + "<br>";
+            var msg = "You have removed " + rmCount + " elements from line " + temp + "." + "<br>" + "<br>";
         }
         document.getElementById("movesMade").innerHTML = msg + document.getElementById("movesMade").innerHTML;
         rmCount = 0;
@@ -400,7 +412,7 @@ function showWinner() {
     var printwinner = '';
     if (turn == 3){
         if(opponent == "AI"){
-            printwinner = "You have forfeited the game. AI wins the game."
+            printwinner = "You have forfeited the game. <br> <i>AI wins the game.<i>"
             AIwins++;
         }else{
             if(loserbyforfeit == 1){
@@ -428,21 +440,26 @@ function showWinner() {
             Player2wins++;
         }
     }
+    document.getElementById("nextTurnBtn").style.display = "none";
     document.getElementById("winnerName").innerHTML = printwinner;
     form.style.display = "block";
     form.style.animation = "fade-in 0.4s forwards";
     var div = document.getElementById("exitbackground");
     div.style.animation = "fade-in2 0.4s forwards"
     div.style.display = "block";
+    var front = document.getElementById("configurations");
+    front.style.zIndex = 4;
     updateClassifications();
 }
 
 async function closewinner() {
     var div = document.getElementById("exitbackground");
     var form = document.getElementById("winnerpop");
+    var front = document.getElementById("configurations");
     div.style.animation = "fade-out2 0.2s forwards"
     form.style.animation = "fade-out 0.2s forwards";
     await new Promise(r => setTimeout(r, 200));
+    front.style.zIndex = 2;
     form.style.display = "none";
     div.style.display = "none";
     reset();
@@ -465,5 +482,17 @@ function startHoverOut() {
         $("#start").css({ "background-color": "black" });
     }else{
         $("#start").css({ "background-color": "brown" });
+    }
+}
+
+async function switchform(x){
+    if(x==0){
+       await closeform();
+        showsignupform();
+    }else if(x==1){
+        await closesignupform();
+        showform();
+    }else{
+        console.log("Error.");
     }
 }

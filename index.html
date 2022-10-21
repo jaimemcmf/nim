@@ -12,7 +12,7 @@
       integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
       crossorigin="anonymous"
     ></script>
-    <script src="https://kit.fontawesome.com/3c508702a0.js" crossorigin="anonymous"></script>
+    <script src="3c508702a0.js"></script>
     <script src="index.js"></script>
     <script src="AI.js"></script>
     <title>Nim Game</title>
@@ -30,7 +30,7 @@
       <div class="login">
         <ul>
           <li onclick="showform()">Log In</li>
-          <li><a class="rr" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">|</a></li>
+          <li> <!--<a class="rr" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"</a> -->|</li>
           <li onclick="showsignupform()">Sign Up</li>
         </ul>
       </div>
@@ -39,29 +39,29 @@
         <div id="login_form">
             <span onclick="closeform()" class="close" title="Close Modal">&times;</span>
             <h1>Log In</h1>
-            <label for="uname"><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" id="uname" required>
+            <label for="uname1"><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" id="uname1" required>
       
-            <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" id="psw" required>
+            <label for="psw1"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" id="psw1" required>
 
-            <p>Don't have an account? Sign up.</p>
+            <p>Don't have an account? <a id="signupfromlogin" onclick="switchform(0)">Sign up.</a></p>
               
             <button type="submit" class="login_submit">Login</button>
           </div>
           <div id="signup_form">
             <span onclick="closesignupform()" class="close" title="Close Modal">&times;</span>
             <h1>Sign Up</h1>
-            <label for="uname"><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" id="uname" required>
+            <label for="uname2"><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" id="uname2" required>
   
-            <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" id="psw" required>
+            <label for="psw2"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" id="psw2" required>
 
-            <label for="psw"><b>Confirm password</b></label>
-            <input type="password" placeholder="Enter Password" id="psw" required>
+            <label for="psw3"><b>Confirm password</b></label>
+            <input type="password" placeholder="Enter Password" id="psw3" required>
 
-            <p>Already have an account? Log in.</p>
+            <p>Already have an account? <a id="loginfromsignup" onclick="switchform(1)">Log in.</a></p>
               
             <button type="submit" class="login_submit">Sign Up</button>
           </div>
@@ -104,14 +104,14 @@
           </div>
         </div>
         <div class="game_window">
-          <button onclick="endturn()" class='nextTurnBtn'>Next Turn</button>
+          <button onclick="endturn()" id='nextTurnBtn'>Next Turn</button>
           
           <div id="draw_area">Loading</div>
         </div>
         <div id="misc">
           <div id="configurations">
             <i class="fa-solid fa-circle-info" id="infoicon" onclick="showInfo()"></i>
-            <div class="dropdown">
+              <div class="dropdown">
               <button class="dropbtn" id="dropdownbtn_text1" onmouseover="openDropDown(1)" onmouseout="closeDropDown(1)">
                 Number of Columns - 4
               </button>
@@ -131,7 +131,6 @@
                 <p onclick="define_opponent('Player')">Player</p>
               </div>
             </div>
-
             <div class="dropdown">
               <button class="dropbtn" id="dropdownbtn_text3" onmouseover="openDropDown(3)" onmouseout="closeDropDown(3)">
                 Order - First
