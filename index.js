@@ -31,11 +31,9 @@ function Initialize() {
     } else if (rows === 7) {
         lines = lines7;
     }
-
     for (var i = 0; i < rows; i++) {
         IsAvailable[i] = new Array(lines[i]);
     }
-
     var draw_element = ''
     for (var i = 0; i < rows; i++) {
         draw_element = draw_element + '<table><tr>'
@@ -58,7 +56,7 @@ function Initialize() {
 
 
 function closeDropDown(s) {
-    if ((s == 4 && opponent == "AI") || s != 4) {
+    if (((s == 4 || s == 5) && opponent == "AI") || s != 4 && s != 5) {
         id = "dropdown-content" + s;
         var dropdownContent = document.getElementById(id);
         dropdownContent.style.display = "none";
@@ -68,15 +66,18 @@ function closeDropDown(s) {
 }
 
 function openDropDown(s) {
-    if ((s == 4 && opponent == "AI") || s != 4) {
+    if (((s == 4 || s == 5) && opponent == "AI") || (s != 4 && s != 5)) {
         id = "dropdown-content" + s;
-        var dropdownContent = document.getElementById(id);
+        let dropdownContent = document.getElementById(id);
         dropdownContent.style.display = "block";
-        var dropdownbtn = document.getElementById(("dropdownbtn_text" + s));
+        let dropdownbtn = document.getElementById(("dropdownbtn_text" + s));
         dropdownbtn.style.backgroundColor = "brown";
     } else {
-        var dropdownbtn = document.getElementById("dropdownbtn_text4");
-        dropdownbtn.style.backgroundColor = "gray";
+        //let dropdownbtn = document.getElementById("dropdownbtn_text" + s);
+        //dropdownbtn.style.backgroundColor = "gray";
+        id = "dropdown-content" + s;
+        var dropdownContent = document.getElementById(id);
+        dropdownContent.style.display = "none";
     }
 }
 
@@ -94,11 +95,15 @@ function change_table(n) {
 function define_opponent(n) {
     opponent = n;
     if (opponent == "Player") {
-        var dropdownbtn = document.getElementById("dropdownbtn_text4");
+        let dropdownbtn = document.getElementById("dropdownbtn_text4");
         dropdownbtn.style.backgroundColor = "gray";
+        let dropdownbtn2 = document.getElementById("dropdownbtn_text5");
+        dropdownbtn2.style.backgroundColor = "gray";
     } else {
-        var dropdownbtn = document.getElementById("dropdownbtn_text4");
+        let dropdownbtn = document.getElementById("dropdownbtn_text4");
         dropdownbtn.style.backgroundColor = "black";
+        let dropdownbtn2 = document.getElementById("dropdownbtn_text5");
+        dropdownbtn2.style.backgroundColor = "black";
     }
     document.getElementById("dropdownbtn_text2").innerHTML = "Opponent - " + n;
     var dropdownContent = document.getElementById("dropdown-content2");
@@ -143,17 +148,33 @@ function define_layout(n) {
 async function startgame() {
     if (inGame == 0) {
         reset();
-        if (turn == 2 && opponent == "AI") {
-            play(gtype, numberRows(), difficulty);
-            turn = 1;
+        if(opponent != "Player"){
+            if (turn == 2) {
+                play(gtype, numberRows(), difficulty);
+                turn = 1;
+            }
+            Initialize();
+            let btn = document.getElementById("start");
+            btn.innerHTML = "End Game";
+            $("#start").css({ "background-color": "brown" });
+            inGame = 1;
+            let ntbtn = document.getElementById("nextTurnBtn");
+            ntbtn.style.display = "block";
+        }else{
+            console.log(usr + " " + pass + " " + game);
+            var update;
+            let y = await joinGame();
+            
+            console.log(y);
+            //.then(() => function(){update = new EventSource("http://twserver.alunos.dcc.fc.up.pt:8008/update?nick="+usr+"&game="+game)});
+            //console.log(game);
+            //update.onmessage = function(event) {
+            //console.log(event.data);
+            //}
+            //update.onerror = function(error){
+              //  console.log("Error: " + error);
+            //}
         }
-        Initialize();
-        let btn = document.getElementById("start");
-        btn.innerHTML = "End Game";
-        $("#start").css({ "background-color": "brown" });
-        inGame = 1;
-        var ntbtn = document.getElementById("nextTurnBtn");
-        ntbtn.style.display = "block";
     } else {
         rmCount = 0;
         inGame = 0;
