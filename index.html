@@ -15,6 +15,7 @@
     <script src="3c508702a0.js"></script>
     <script src="index.js"></script>
     <script src="AI.js"></script>
+    <script src="connect.js"></script>
     <title>Nim Game</title>
   </head>
   <body onload="Initialize()">
@@ -47,7 +48,7 @@
 
             <p>Don't have an account? <a id="signupfromlogin" onclick="switchform(0)">Sign up.</a></p>
               
-            <button type="submit" class="login_submit">Login</button>
+            <button onclick="loginClick()" type="submit" class="login_submit">Login</button>
           </div>
           <div id="signup_form">
             <span onclick="closesignupform()" class="close" title="Close Modal">&times;</span>
@@ -63,7 +64,7 @@
 
             <p>Already have an account? <a id="loginfromsignup" onclick="switchform(1)">Log in.</a></p>
               
-            <button type="submit" class="login_submit">Sign Up</button>
+            <button onclick="registerClick()" type="submit" class="login_submit">Sign Up</button>
           </div>
           <div id="infopop">
             <span onclick="closeInfo()" class="close" title="Close Modal">&times;</span>
