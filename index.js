@@ -16,21 +16,12 @@ var Playerwins = 0;
 var Player1wins = 0;
 var Player2wins = 0;
 var rmCount = 0;
-var lines4 = [1, 3, 5, 7];
-var lines5 = [1, 3, 5, 7, 9];
-var lines6 = [1, 3, 5, 7, 9, 11];
-var lines7 = [1, 3, 5, 7, 9, 11, 13];
+var boards  = [[1, 3, 5, 7], [1, 3, 5, 7, 9], [1, 3, 5, 7, 9, 11], [1, 3, 5, 7, 9, 11, 13]];
+var adjust = [1, 3, 5, 7, 9, 11, 13];
+var aux = [0,1,2,3,4,5,6];
 
 function Initialize() {
-    if (rows === 4) {
-        lines = lines4;
-    } else if (rows === 5) {
-        lines = lines5;
-    } else if (rows === 6) {
-        lines = lines6;
-    } else if (rows === 7) {
-        lines = lines7;
-    }
+    lines = numberRows();
     for (var i = 0; i < rows; i++) {
         IsAvailable[i] = new Array(lines[i]);
     }
@@ -73,8 +64,6 @@ function openDropDown(s) {
         let dropdownbtn = document.getElementById(("dropdownbtn_text" + s));
         dropdownbtn.style.backgroundColor = "brown";
     } else {
-        //let dropdownbtn = document.getElementById("dropdownbtn_text" + s);
-        //dropdownbtn.style.backgroundColor = "gray";
         id = "dropdown-content" + s;
         var dropdownContent = document.getElementById(id);
         dropdownContent.style.display = "none";
@@ -145,7 +134,7 @@ function define_layout(n) {
     }
 }
 
-async function startgame() {
+function startgame() {
     if (inGame == 0) {
         reset();
         if(opponent != "Player"){
@@ -153,29 +142,27 @@ async function startgame() {
                 play(gtype, numberRows(), difficulty);
                 turn = 1;
             }
-            Initialize();
-            let btn = document.getElementById("start");
-            btn.innerHTML = "End Game";
-            $("#start").css({ "background-color": "brown" });
-            inGame = 1;
-            let ntbtn = document.getElementById("nextTurnBtn");
-            ntbtn.style.display = "block";
+            init();
         }else{
-            console.log(usr + " " + pass + " " + game);
-            var update;
-            let y = await joinGame();
-            
-            console.log(y);
-            //.then(() => function(){update = new EventSource("http://twserver.alunos.dcc.fc.up.pt:8008/update?nick="+usr+"&game="+game)});
-            //console.log(game);
-            //update.onmessage = function(event) {
-            //console.log(event.data);
-            //}
-            //update.onerror = function(error){
-              //  console.log("Error: " + error);
-            //}
+            joinGame()
+            .then(() => {
+                console.log(game);
+                var update = new EventSource("http://twserver.alunos.dcc.fc.up.pt:8008/update?nick="+usr+"&game="+game);
+                update.onmessage = function(event) {
+                    let d = JSON.parse(event.data);
+                    console.log("D  " + JSON.stringify(d));
+                    if(d.turn == usr) turn = 1;
+                    else turn = 2;
+                    for(i=0; i<rows; i++) numberRows()[i] = d.rack[i] + aux[i];
+                    init();
+                }
+            })
+            .catch(e => console.log("error"))
         }
     } else {
+        if(opponent == "Player"){
+            leaveGame();
+        }
         rmCount = 0;
         inGame = 0;
         loserbyforfeit = turn;
@@ -188,10 +175,7 @@ async function startgame() {
 }
 
 function reset() {
-    lines4 = [1, 3, 5, 7];
-    lines5 = [1, 3, 5, 7, 9];
-    lines6 = [1, 3, 5, 7, 9, 11];
-    lines7 = [1, 3, 5, 7, 9, 11, 13];
+    boards = [[1, 3, 5, 7], [1, 3, 5, 7, 9], [1, 3, 5, 7, 9, 11], [1, 3, 5, 7, 9, 11, 13]];
     turn = ConstTurn;
     FirstPlay = true;
     document.getElementById("movesMade").innerHTML = "";
@@ -302,12 +286,11 @@ async function remove(element) {
     ElRow = element.attr('data-Rows');
     var el = document.getElementById(element.attr('id'));
     if (inGame) {
-        if (rows == 4) {
             if (FirstPlay) {
                 el.style.animation = "fade-out 0.2s forwards";
                 await new Promise(r => setTimeout(r, 200));
                 AllowedRow = ElRow;
-                lines4[ElRow] -= 1;
+                numberRows()[ElRow] -= 1;
                 rmCount++;
                 Initialize();
                 FirstPlay = false;
@@ -315,69 +298,22 @@ async function remove(element) {
                 if (AllowedRow == ElRow) {
                     el.style.animation = "fade-out 0.2s forwards";
                     await new Promise(r => setTimeout(r, 200));
-                    lines4[ElRow] -= 1;
+                    numberRows()[ElRow] -= 1;
                     rmCount++;
                     Initialize();
                 }
             }
-        } else if (rows == 5) {
-            if (FirstPlay) {
-                el.style.animation = "fade-out 0.2s forwards";
-                await new Promise(r => setTimeout(r, 200));
-                AllowedRow = ElRow;
-                lines5[ElRow] -= 1;
-                rmCount++;
-                Initialize();
-                FirstPlay = false;
-            } else {
-                if (AllowedRow == ElRow) {
-                    el.style.animation = "fade-out 0.2s forwards";
-                    await new Promise(r => setTimeout(r, 200));
-                    lines5[ElRow] -= 1;
-                    rmCount++;
-                    Initialize();
-                }
-            }
-        } else if (rows == 6) {
-            if (FirstPlay) {
-                el.style.animation = "fade-out 0.2s forwards";
-                await new Promise(r => setTimeout(r, 200));
-                AllowedRow = ElRow;
-                lines6[ElRow] -= 1;
-                rmCount++;
-                Initialize();
-                FirstPlay = false;
-            } else {
-                if (AllowedRow == ElRow) {
-                    el.style.animation = "fade-out 0.2s forwards";
-                    await new Promise(r => setTimeout(r, 200));
-                    lines6[ElRow] -= 1;
-                    rmCount++;
-                    Initialize();
-                }
-            }
-        } else if (rows == 7) {
-            if (FirstPlay) {
-                el.style.animation = "fade-out 0.2s forwards";
-                await new Promise(r => setTimeout(r, 200));
-                AllowedRow = ElRow;
-                lines7[ElRow] -= 1;
-                rmCount++;
-                Initialize();
-                FirstPlay = false;
-            } else {
-                if (AllowedRow == ElRow) {
-                    el.style.animation = "fade-out 0.2s forwards";
-                    await new Promise(r => setTimeout(r, 200));
-                    lines7[ElRow] -= 1;
-                    rmCount++;
-                    Initialize();
-                }
-            }
-        } else {
-            console.log("Number of Lines not allowed")
-        }
     }
+}
+
+function init(){
+    Initialize();
+    let btn = document.getElementById("start");
+    btn.innerHTML = "End Game";
+    $("#start").css({ "background-color": "brown" });
+    inGame = 1;
+    let ntbtn = document.getElementById("nextTurnBtn");
+    ntbtn.style.display = "block";
 }
 
 async function endturn() {
@@ -398,6 +334,8 @@ async function endturn() {
             var msg = "You have removed " + rmCount + " elements from line " + temp + "." + "<br>" + "<br>";
         }
         document.getElementById("movesMade").innerHTML = msg + document.getElementById("movesMade").innerHTML;
+        //console.log("notify play  " + AllowedRow + " " + rmCount + " " + (adjust[AllowedRow]-rmCount - aux[AllowedRow]))
+        if(opponent == "Player") notifyPlay(AllowedRow, (adjust[AllowedRow]-rmCount-aux[AllowedRow]));
         rmCount = 0;
         if (turn == 1) turn = 2;
         else turn = 1;
@@ -422,10 +360,7 @@ async function endturn() {
 }
 
 function numberRows() {
-    if (rows == 4) return lines4;
-    if (rows == 5) return lines5;
-    if (rows == 6) return lines6;
-    if (rows == 7) return lines7;
+    return boards[rows-4];
 }
 
 function showWinner() {
@@ -486,9 +421,6 @@ async function closewinner() {
     reset();
     Initialize();
 }
-
-
-// Animações butão Start
 
 function startHoverIn() {
     if (inGame == 0) {

@@ -140,15 +140,44 @@ async function register(url = '', data = {}) {
     }
 
   
-async function joinGame(){
-      let size = rows;
-      join('http://twserver.alunos.dcc.fc.up.pt:8008/join', { nick:usr, password:pass, group:108557, size:size})
-        .then((data) => {
-        game = data.game;
-        console.log(JSON.stringify(data));
-        console.log(game);
-        return game;
-        })
-        .catch(e => {console.log(e)});
-        
-  }
+function joinGame(){
+        let size = rows;
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            join('http://twserver.alunos.dcc.fc.up.pt:8008/join', { nick:usr, password:pass, group:108557, size:size})
+            .then((data)  => {
+              if('error' in data)reject();
+              else {
+                game = data.game;
+                resolve();
+              }
+            })
+            .catch((e) => {
+              reject();
+            })
+           }, 750);
+        });
+}
+
+function notifyPlay(stack, pieces){
+  //console.log("notify play  connect" + stack + " " + pieces);
+  notify('http://twserver.alunos.dcc.fc.up.pt:8008/notify', { nick:usr, password:pass, game:game, stack:stack, pieces: pieces})
+  .then((data) => {
+    if('error' in data){
+      console.log(data.error);
+    }else{
+      console.log(data);
+    }
+  })
+  .catch(e => console.log(e));
+}
+
+function leaveGame(){
+  leave('http://twserver.alunos.dcc.fc.up.pt:8008/leave', { nick:usr, password:pass, game:game})
+  .then((data) => {
+    if('error' in data){
+      console.log(data.error);
+    }
+  })
+  .catch(e => console.log(e));
+}
