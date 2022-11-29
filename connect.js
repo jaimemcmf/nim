@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////// FETCH REQUESTS ///////////////////////////////////////////////////////////////////
-var usr, pass;
+var usr, pass, opp;
 var game;
 
 
@@ -133,6 +133,9 @@ async function register(url = '', data = {}) {
                 document.getElementById("signup_text").style.display = "inline";
                 user_text.innerHTML = "|";
                 user_text.onclick = null;
+                usr = undefined;
+                pass = undefined;
+                updateClassifications();
             }
         }
         })

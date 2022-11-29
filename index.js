@@ -60,14 +60,30 @@ function startgame() {
                 console.log(game);
                 var update = new EventSource("http://twserver.alunos.dcc.fc.up.pt:8008/update?nick="+usr+"&game="+game);
                 update.onmessage = function(event) {
+                    console.log(event);
+                    let d = JSON.parse(event.data);
+                    if('rack' in d)
+                        for(i=0; i<rows; i++) numberRows()[i] = d.rack[i];
+
                     if('winner' in JSON.parse(event.data)){
                         console.log(event.data);
+                        if(d.winner == usr){
+                            turn = 1;
+                        }else{
+                            turn = 2;
+                            op = d.winner;
+                        }
+                        inGame = 0;
+                        rmCount = 0;
+                        showWinner();
+                        let btn = document.getElementById("start");
+                        btn.innerHTML = "Start Game";
+                        $("#start").css({ "background-color": "black" });
+                        update.close();
                     }else{
-                        let d = JSON.parse(event.data);
                         console.log("D  " + JSON.stringify(d));
                         if(d.turn == usr) turn = 1;
                         else turn = 2;
-                        for(i=0; i<rows; i++) numberRows()[i] = d.rack[i];
                         init();
                     }
                     
@@ -185,10 +201,22 @@ function showClassifications() {
 }
 
 function updateClassifications() {
-    document.getElementById("aiscore").innerHTML = AIwins;
-    document.getElementById("playerAIscore").innerHTML = Playerwins;
-    document.getElementById("playeronescore").innerHTML = Player1wins;
-    document.getElementById("playertwoscore").innerHTML = Player2wins;
+    if (typeof(Storage) !== "undefined") {
+        document.getElementById("aiscore").innerHTML = localStorage.ai;
+        document.getElementById("playerAIscore").innerHTML = localStorage.usr;
+        if(usr != undefined){
+            document.getElementById("player_name").innerHTML = usr;
+        }else{
+            document.getElementById("player_name").innerHTML = "Player";
+        }
+      } else {
+        console.log("No support for WebStorage");
+        document.getElementById("aiscore").innerHTML = AIwins;
+        document.getElementById("playerAIscore").innerHTML = Playerwins;
+      }
+      document.getElementById("playeronescore").innerHTML = Player1wins;
+      document.getElementById("playertwoscore").innerHTML = Player2wins;
+    
 }
 
 async function closeClassifications() {
@@ -201,7 +229,7 @@ async function closeClassifications() {
 async function remove(element) {
     ElRow = element.attr('data-Rows');
     var el = document.getElementById(element.attr('id'));
-    if (inGame) {
+    if (inGame && turn == 1) {
             if (FirstPlay) {
                 el.style.animation = "fade-out 0.2s forwards";
                 await new Promise(r => setTimeout(r, 200));
@@ -239,6 +267,7 @@ async function endturn() {
             let btn = document.getElementById("start");
             btn.innerHTML = "Start Game";
             $("#start").css({ "background-color": "black" });
+            update.close();
             showWinner();
             return;
         }
@@ -286,7 +315,11 @@ function showWinner() {
     if (turn == 3){
         if(opponent == "AI"){
             printwinner = "You have forfeited the game. <br> <i>AI wins the game.<i>"
-            AIwins++;
+            if (localStorage.ai) {
+                localStorage.ai = Number(localStorage.ai) + 1;
+              } else {
+                localStorage.ai = 1;
+            }
         }else{
             if(loserbyforfeit == 1){
                 printwinner = "You have forfeited the game. Player 2 wins the game."
@@ -299,17 +332,27 @@ function showWinner() {
     }else if (turn == 1) {
         if (opponent == "AI") {
             printwinner = "You have won!";
-            Playerwins++;
+            if (localStorage.usr) {
+                localStorage.usr = Number(localStorage.usr) + 1;
+              } else {
+                localStorage.usr = 1;
+              }
         } else {
-            printwinner = "Player 1 has won!"
+            if(usr == undefined) usr = "Player 1";
+            printwinner = usr + " has won!"
             Player1wins++;
         }
     } else {
         if (opponent == 'AI') {
             printwinner = "The AI has won.";
-            AIwins++;
+            if (localStorage.ai) {
+                localStorage.ai = Number(localStorage.ai) + 1;
+              } else {
+                localStorage.ai = 1;
+              }
         } else {
-            printwinner = "Player 2 has won!";
+            if(op == undefined ) op = "Player 2";
+            printwinner = op + " has won!";
             Player2wins++;
         }
     }
