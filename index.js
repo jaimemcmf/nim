@@ -45,95 +45,6 @@ function Initialize() {
     }
 }
 
-
-function closeDropDown(s) {
-    if (((s == 4 || s == 5) && opponent == "AI") || s != 4 && s != 5) {
-        id = "dropdown-content" + s;
-        var dropdownContent = document.getElementById(id);
-        dropdownContent.style.display = "none";
-        var dropdownbtn = document.getElementById(("dropdownbtn_text" + s));
-        dropdownbtn.style.backgroundColor = "black";
-    }
-}
-
-function openDropDown(s) {
-    if (((s == 4 || s == 5) && opponent == "AI") || (s != 4 && s != 5)) {
-        id = "dropdown-content" + s;
-        let dropdownContent = document.getElementById(id);
-        dropdownContent.style.display = "block";
-        let dropdownbtn = document.getElementById(("dropdownbtn_text" + s));
-        dropdownbtn.style.backgroundColor = "brown";
-    } else {
-        id = "dropdown-content" + s;
-        var dropdownContent = document.getElementById(id);
-        dropdownContent.style.display = "none";
-    }
-}
-
-function change_table(n) {
-    rows = n;
-    if (lay == "Vertical") {
-        document.getElementById("dropdownbtn_text1").innerHTML = "Number of Lines - " + n;
-    } else {
-        document.getElementById("dropdownbtn_text1").innerHTML = "Number of Columns - " + n;
-    }
-    var dropdownContent = document.getElementById("dropdown-content1");
-    dropdownContent.style.display = "none";
-}
-
-function define_opponent(n) {
-    opponent = n;
-    if (opponent == "Player") {
-        let dropdownbtn = document.getElementById("dropdownbtn_text4");
-        dropdownbtn.style.backgroundColor = "gray";
-        let dropdownbtn2 = document.getElementById("dropdownbtn_text5");
-        dropdownbtn2.style.backgroundColor = "gray";
-    } else {
-        let dropdownbtn = document.getElementById("dropdownbtn_text4");
-        dropdownbtn.style.backgroundColor = "black";
-        let dropdownbtn2 = document.getElementById("dropdownbtn_text5");
-        dropdownbtn2.style.backgroundColor = "black";
-    }
-    document.getElementById("dropdownbtn_text2").innerHTML = "Opponent - " + n;
-    var dropdownContent = document.getElementById("dropdown-content2");
-    dropdownContent.style.display = "none";
-}
-
-function define_order(n) {
-    if (n == "First") ConstTurn = 1;
-    else ConstTurn = 2;
-    turn = ConstTurn;
-    document.getElementById("dropdownbtn_text3").innerHTML = "Order - " + n;
-    var dropdownContent = document.getElementById("dropdown-content3");
-    dropdownContent.style.display = "none";
-}
-
-function define_difficulty(n) {
-    difficulty = n;
-    document.getElementById("dropdownbtn_text4").innerHTML = "Difficulty - " + n;
-    var dropdownContent = document.getElementById("dropdown-content4");
-    dropdownContent.style.display = "none";
-}
-
-function define_gametype(n) {
-    gtype = n;
-    document.getElementById("dropdownbtn_text5").innerHTML = "Gametype - " + n;
-    var dropdownContent = document.getElementById("dropdown-content5");
-    dropdownContent.style.display = "none";
-}
-
-function define_layout(n) {
-    lay = n;
-    document.getElementById("dropdownbtn_text6").innerHTML = "Layout - " + n;
-    var dropdownContent = document.getElementById("dropdown-content6");
-    dropdownContent.style.display = "none";
-    if (lay == "Vertical") {
-        document.getElementById("dropdownbtn_text1").innerHTML = "Number of Lines - " + rows;
-    } else {
-        document.getElementById("dropdownbtn_text1").innerHTML = "Number of Columns - " + rows;
-    }
-}
-
 function startgame() {
     if (inGame == 0) {
         reset();
@@ -149,12 +60,17 @@ function startgame() {
                 console.log(game);
                 var update = new EventSource("http://twserver.alunos.dcc.fc.up.pt:8008/update?nick="+usr+"&game="+game);
                 update.onmessage = function(event) {
-                    let d = JSON.parse(event.data);
-                    console.log("D  " + JSON.stringify(d));
-                    if(d.turn == usr) turn = 1;
-                    else turn = 2;
-                    for(i=0; i<rows; i++) numberRows()[i] = d.rack[i] + aux[i];
-                    init();
+                    if('winner' in JSON.parse(event.data)){
+                        console.log(event.data);
+                    }else{
+                        let d = JSON.parse(event.data);
+                        console.log("D  " + JSON.stringify(d));
+                        if(d.turn == usr) turn = 1;
+                        else turn = 2;
+                        for(i=0; i<rows; i++) numberRows()[i] = d.rack[i];
+                        init();
+                    }
+                    
                 }
             })
             .catch(e => console.log("error"))
@@ -318,7 +234,7 @@ function init(){
 
 async function endturn() {
     if (!FirstPlay) {
-        if (winner(gtype, numberRows())) {
+        if (winner(gtype, numberRows()) && opponent == "AI") {
             inGame = 0;
             let btn = document.getElementById("start");
             btn.innerHTML = "Start Game";
@@ -334,8 +250,9 @@ async function endturn() {
             var msg = "You have removed " + rmCount + " elements from line " + temp + "." + "<br>" + "<br>";
         }
         document.getElementById("movesMade").innerHTML = msg + document.getElementById("movesMade").innerHTML;
-        //console.log("notify play  " + AllowedRow + " " + rmCount + " " + (adjust[AllowedRow]-rmCount - aux[AllowedRow]))
-        if(opponent == "Player") notifyPlay(AllowedRow, (adjust[AllowedRow]-rmCount-aux[AllowedRow]));
+        console.log("notify play  " + AllowedRow + " " + rmCount + " " + rmCount)
+        if(opponent == "Player") notifyPlay(AllowedRow, numberRows()[AllowedRow]);
+        adjust = numberRows();
         rmCount = 0;
         if (turn == 1) turn = 2;
         else turn = 1;
@@ -447,5 +364,92 @@ async function switchform(x){
         showform();
     }else{
         console.log("Error.");
+    }
+}
+function closeDropDown(s) {
+    if (((s == 4 || s == 5) && opponent == "AI") || s != 4 && s != 5) {
+        id = "dropdown-content" + s;
+        var dropdownContent = document.getElementById(id);
+        dropdownContent.style.display = "none";
+        var dropdownbtn = document.getElementById(("dropdownbtn_text" + s));
+        dropdownbtn.style.backgroundColor = "black";
+    }
+}
+
+function openDropDown(s) {
+    if (((s == 4 || s == 5) && opponent == "AI") || (s != 4 && s != 5)) {
+        id = "dropdown-content" + s;
+        let dropdownContent = document.getElementById(id);
+        dropdownContent.style.display = "block";
+        let dropdownbtn = document.getElementById(("dropdownbtn_text" + s));
+        dropdownbtn.style.backgroundColor = "brown";
+    } else {
+        id = "dropdown-content" + s;
+        var dropdownContent = document.getElementById(id);
+        dropdownContent.style.display = "none";
+    }
+}
+
+function change_table(n) {
+    rows = n;
+    if (lay == "Vertical") {
+        document.getElementById("dropdownbtn_text1").innerHTML = "Number of Lines - " + n;
+    } else {
+        document.getElementById("dropdownbtn_text1").innerHTML = "Number of Columns - " + n;
+    }
+    var dropdownContent = document.getElementById("dropdown-content1");
+    dropdownContent.style.display = "none";
+}
+
+function define_opponent(n) {
+    opponent = n;
+    if (opponent == "Player") {
+        let dropdownbtn = document.getElementById("dropdownbtn_text4");
+        dropdownbtn.style.backgroundColor = "gray";
+        let dropdownbtn2 = document.getElementById("dropdownbtn_text5");
+        dropdownbtn2.style.backgroundColor = "gray";
+    } else {
+        let dropdownbtn = document.getElementById("dropdownbtn_text4");
+        dropdownbtn.style.backgroundColor = "black";
+        let dropdownbtn2 = document.getElementById("dropdownbtn_text5");
+        dropdownbtn2.style.backgroundColor = "black";
+    }
+    document.getElementById("dropdownbtn_text2").innerHTML = "Opponent - " + n;
+    var dropdownContent = document.getElementById("dropdown-content2");
+    dropdownContent.style.display = "none";
+}
+
+function define_order(n) {
+    if (n == "First") ConstTurn = 1;
+    else ConstTurn = 2;
+    turn = ConstTurn;
+    document.getElementById("dropdownbtn_text3").innerHTML = "Order - " + n;
+    var dropdownContent = document.getElementById("dropdown-content3");
+    dropdownContent.style.display = "none";
+}
+
+function define_difficulty(n) {
+    difficulty = n;
+    document.getElementById("dropdownbtn_text4").innerHTML = "Difficulty - " + n;
+    var dropdownContent = document.getElementById("dropdown-content4");
+    dropdownContent.style.display = "none";
+}
+
+function define_gametype(n) {
+    gtype = n;
+    document.getElementById("dropdownbtn_text5").innerHTML = "Gametype - " + n;
+    var dropdownContent = document.getElementById("dropdown-content5");
+    dropdownContent.style.display = "none";
+}
+
+function define_layout(n) {
+    lay = n;
+    document.getElementById("dropdownbtn_text6").innerHTML = "Layout - " + n;
+    var dropdownContent = document.getElementById("dropdown-content6");
+    dropdownContent.style.display = "none";
+    if (lay == "Vertical") {
+        document.getElementById("dropdownbtn_text1").innerHTML = "Number of Lines - " + rows;
+    } else {
+        document.getElementById("dropdownbtn_text1").innerHTML = "Number of Columns - " + rows;
     }
 }
