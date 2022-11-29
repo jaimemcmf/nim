@@ -62,6 +62,7 @@ function startgame() {
                 update.onmessage = function(event) {
                     console.log(event);
                     let d = JSON.parse(event.data);
+                    if('turn' in d && turn != usr) op = d.turn;
                     if('rack' in d)
                         for(i=0; i<rows; i++) numberRows()[i] = d.rack[i];
 
@@ -71,7 +72,6 @@ function startgame() {
                             turn = 1;
                         }else{
                             turn = 2;
-                            op = d.winner;
                         }
                         inGame = 0;
                         rmCount = 0;
@@ -274,9 +274,13 @@ async function endturn() {
         var temp = AllowedRow;
         temp++;
         if (opponent == "Player") {
-            var msg = "Player " + turn + " has removed " + rmCount + " elements from line " + temp + "." + "<br>" + "<br>";
+            if(turn == 1)
+                var msg = usr + " has removed " + rmCount + " elements from line " + temp + "." + "<br>" + "<br>";
+            else
+                var msg = op + " has removed " + rmCount + " elements from line " + temp + "." + "<br>" + "<br>";
         } else {
-            var msg = "You have removed " + rmCount + " elements from line " + temp + "." + "<br>" + "<br>";
+            if(usr == undefined) var msg = "You have removed " + rmCount + " elements from line " + temp + "." + "<br>" + "<br>";
+            else var msg = usr + " has removed " + rmCount + " elements from line " + temp + "." + "<br>" + "<br>";
         }
         document.getElementById("movesMade").innerHTML = msg + document.getElementById("movesMade").innerHTML;
         console.log("notify play  " + AllowedRow + " " + rmCount + " " + rmCount)
