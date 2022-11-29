@@ -57,15 +57,23 @@ function startgame() {
         }else{
             joinGame()
             .then(() => {
+                waiting();
                 console.log(game);
                 var update = new EventSource("http://twserver.alunos.dcc.fc.up.pt:8008/update?nick="+usr+"&game="+game);
                 update.onmessage = function(event) {
                     console.log(event);
                     let d = JSON.parse(event.data);
-                    if('turn' in d && turn != usr) op = d.turn;
+                    if('turn' in d && d.turn != usr){
+                        op = d.turn;
+                    }
+                    if('stack' in d && d.turn == usr){
+                        t = numberRows()[d.stack] - d.pieces;
+                        c = d.stack+1;
+                        let msg = op + " has removed " + t + " elements from line " + c + "." + "<br>" + "<br>";
+                        document.getElementById("movesMade").innerHTML = msg + document.getElementById("movesMade").innerHTML;
+                    } 
                     if('rack' in d)
                         for(i=0; i<rows; i++) numberRows()[i] = d.rack[i];
-
                     if('winner' in JSON.parse(event.data)){
                         console.log(event.data);
                         if(d.winner == usr){
@@ -103,6 +111,77 @@ function startgame() {
         let btn = document.getElementById("start");
         btn.innerHTML = "Start Game";
         $("#start").css({ "background-color": "black" });
+    }
+}
+
+async function remove(element) {
+    ElRow = element.attr('data-Rows');
+    var el = document.getElementById(element.attr('id'));
+    if (inGame && turn == 1) {
+        if (FirstPlay) {
+            el.style.animation = "fade-out 0.2s forwards";
+            await new Promise(r => setTimeout(r, 200));
+            AllowedRow = ElRow;
+            numberRows()[ElRow] -= 1;
+            rmCount++;
+            Initialize();
+            FirstPlay = false;
+        } else {
+            if (AllowedRow == ElRow) {
+                el.style.animation = "fade-out 0.2s forwards";
+                await new Promise(r => setTimeout(r, 200));
+                numberRows()[ElRow] -= 1;
+                rmCount++;
+                Initialize();
+            }
+        }
+    }
+}
+
+async function endturn() {
+    if (!FirstPlay) {
+        if (winner(gtype, numberRows()) && opponent == "AI") {
+            showWinner();
+            inGame = 0;
+            let btn = document.getElementById("start");
+            btn.innerHTML = "Start Game";
+            $("#start").css({ "background-color": "black" });
+            return;
+        }
+        var temp = AllowedRow;
+        temp++;
+        if (opponent == "Player") {
+            if(turn == 1)
+                var msg = usr + " has removed " + rmCount + " elements from line " + temp + "." + "<br>" + "<br>";
+            else
+                var msg = op + " has removed " + rmCount + " elements from line " + temp + "." + "<br>" + "<br>";
+        } else {
+            if(usr == undefined) var msg = "You have removed " + rmCount + " elements from line " + temp + "." + "<br>" + "<br>";
+            else var msg = usr + " has removed " + rmCount + " elements from line " + temp + "." + "<br>" + "<br>";
+        }
+        document.getElementById("movesMade").innerHTML = msg + document.getElementById("movesMade").innerHTML;
+        console.log("notify play  " + AllowedRow + " " + rmCount + " " + rmCount)
+        if(opponent == "Player") notifyPlay(AllowedRow, numberRows()[AllowedRow]);
+        adjust = numberRows();
+        rmCount = 0;
+        if (turn == 1) turn = 2;
+        else turn = 1;
+        if (opponent == "AI") {
+            await new Promise(r => setTimeout(r, 500));
+            play(gtype, numberRows(), difficulty);
+            Initialize()
+            if (winner(gtype, numberRows())) {
+                inGame = 0;
+                let btn = document.getElementById("start");
+                btn.innerHTML = "Start Game";
+                $("#start").css({ "background-color": "black" });
+                showWinner();
+                return;
+            }
+            turn = 1;
+        }
+        Initialize();
+        FirstPlay = true;
     }
 }
 
@@ -216,7 +295,6 @@ function updateClassifications() {
       }
       document.getElementById("playeronescore").innerHTML = Player1wins;
       document.getElementById("playertwoscore").innerHTML = Player2wins;
-    
 }
 
 async function closeClassifications() {
@@ -224,30 +302,6 @@ async function closeClassifications() {
     form.style.animation = "fade-out 0.2s forwards";
     await new Promise(r => setTimeout(r, 200));
     form.style.display = "none";
-}
-
-async function remove(element) {
-    ElRow = element.attr('data-Rows');
-    var el = document.getElementById(element.attr('id'));
-    if (inGame && turn == 1) {
-            if (FirstPlay) {
-                el.style.animation = "fade-out 0.2s forwards";
-                await new Promise(r => setTimeout(r, 200));
-                AllowedRow = ElRow;
-                numberRows()[ElRow] -= 1;
-                rmCount++;
-                Initialize();
-                FirstPlay = false;
-            } else {
-                if (AllowedRow == ElRow) {
-                    el.style.animation = "fade-out 0.2s forwards";
-                    await new Promise(r => setTimeout(r, 200));
-                    numberRows()[ElRow] -= 1;
-                    rmCount++;
-                    Initialize();
-                }
-            }
-    }
 }
 
 function init(){
@@ -260,53 +314,10 @@ function init(){
     ntbtn.style.display = "block";
 }
 
-async function endturn() {
-    if (!FirstPlay) {
-        if (winner(gtype, numberRows()) && opponent == "AI") {
-            inGame = 0;
-            let btn = document.getElementById("start");
-            btn.innerHTML = "Start Game";
-            $("#start").css({ "background-color": "black" });
-            update.close();
-            showWinner();
-            return;
-        }
-        var temp = AllowedRow;
-        temp++;
-        if (opponent == "Player") {
-            if(turn == 1)
-                var msg = usr + " has removed " + rmCount + " elements from line " + temp + "." + "<br>" + "<br>";
-            else
-                var msg = op + " has removed " + rmCount + " elements from line " + temp + "." + "<br>" + "<br>";
-        } else {
-            if(usr == undefined) var msg = "You have removed " + rmCount + " elements from line " + temp + "." + "<br>" + "<br>";
-            else var msg = usr + " has removed " + rmCount + " elements from line " + temp + "." + "<br>" + "<br>";
-        }
-        document.getElementById("movesMade").innerHTML = msg + document.getElementById("movesMade").innerHTML;
-        console.log("notify play  " + AllowedRow + " " + rmCount + " " + rmCount)
-        if(opponent == "Player") notifyPlay(AllowedRow, numberRows()[AllowedRow]);
-        adjust = numberRows();
-        rmCount = 0;
-        if (turn == 1) turn = 2;
-        else turn = 1;
-        if (opponent == "AI") {
-            //if Player vs AI
-            await new Promise(r => setTimeout(r, 500));
-            play(gtype, numberRows(), difficulty);
-            Initialize()
-            if (winner(gtype, numberRows())) {
-                inGame = 0;
-                let btn = document.getElementById("start");
-                btn.innerHTML = "Start Game";
-                $("#start").css({ "background-color": "black" });
-                showWinner();
-                return;
-            }
-            turn = 1;
-        }
-        Initialize();
-        FirstPlay = true;
-    }
+function waiting(){
+    let btn = document.getElementById("start");
+    btn.innerHTML = "Waiting...";
+    $("#start").css({ "background-color": "orange" });
 }
 
 function numberRows() {

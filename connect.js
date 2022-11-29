@@ -22,9 +22,9 @@ async function register(url = '', data = {}) {
 
   async function join(url = '', data = {}) {
     const response = await fetch(url, {
-      method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      mode: 'cors', // no-cors, *cors, same-origin
-      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      method: 'POST',
+      mode: 'cors',
+      cache: 'no-cache',
       credentials: 'same-origin', // include, *same-origin, omit
       headers: {
         'Content-Type': 'application/json'
@@ -177,6 +177,17 @@ function notifyPlay(stack, pieces){
 
 function leaveGame(){
   leave('http://twserver.alunos.dcc.fc.up.pt:8008/leave', { nick:usr, password:pass, game:game})
+  .then((data) => {
+    if('error' in data){
+      console.log(data.error);
+    }
+  })
+  .catch(e => console.log(e));
+}
+
+function getRanking(){
+  let size = rows;
+  ranking('http://twserver.alunos.dcc.fc.up.pt:8008/ranking', { group:group, size:size})
   .then((data) => {
     if('error' in data){
       console.log(data.error);
