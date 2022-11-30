@@ -142,6 +142,7 @@ async function endturn() {
     if (!FirstPlay) {
         if (winner(gtype, numberRows()) && opponent == "AI") {
             showWinner();
+            getRanking();
             inGame = 0;
             let btn = document.getElementById("start");
             btn.innerHTML = "Start Game";
@@ -171,11 +172,12 @@ async function endturn() {
             play(gtype, numberRows(), difficulty);
             Initialize()
             if (winner(gtype, numberRows())) {
+                showWinner();
+                getRanking();
                 inGame = 0;
                 let btn = document.getElementById("start");
                 btn.innerHTML = "Start Game";
                 $("#start").css({ "background-color": "black" });
-                showWinner();
                 return;
             }
             turn = 1;
@@ -271,6 +273,7 @@ async function closeRules() {
 }
 
 function showClassifications() {
+    
     var form = document.getElementById("classificationspop");
     var hide = document.getElementById("rulespop");
     updateClassifications();
@@ -280,6 +283,7 @@ function showClassifications() {
 }
 
 function updateClassifications() {
+    getRanking();
     if (typeof(Storage) !== "undefined") {
         document.getElementById("aiscore").innerHTML = localStorage.ai;
         document.getElementById("playerAIscore").innerHTML = localStorage.usr;
@@ -288,13 +292,11 @@ function updateClassifications() {
         }else{
             document.getElementById("player_name").innerHTML = "Player";
         }
-      } else {
+    } else {
         console.log("No support for WebStorage");
         document.getElementById("aiscore").innerHTML = AIwins;
         document.getElementById("playerAIscore").innerHTML = Playerwins;
-      }
-      document.getElementById("playeronescore").innerHTML = Player1wins;
-      document.getElementById("playertwoscore").innerHTML = Player2wins;
+    }
 }
 
 async function closeClassifications() {

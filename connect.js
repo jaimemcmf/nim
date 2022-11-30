@@ -186,9 +186,16 @@ function leaveGame(){
 }
 
 function getRanking(){
+  let classi = "";
   let size = rows;
-  ranking('http://twserver.alunos.dcc.fc.up.pt:8008/ranking', { group:group, size:size})
+  ranking('http://twserver.alunos.dcc.fc.up.pt:8008/ranking', { group:5, size:size})
   .then((data) => {
+    if('ranking' in data){
+      for(i=0; i<data.ranking.length; i++){
+        classi += data.ranking[i].nick + ":   " + data.ranking[i].victories + "/" + data.ranking[i].games + "<br>" + "<br>";
+      }
+      document.getElementById("pvpClassifications").innerHTML = classi;
+    } 
     if('error' in data){
       console.log(data.error);
     }
