@@ -12,11 +12,8 @@ const server = http.createServer( (request, response)  => {
         case 'POST':
             switch(pathname){
                 case '/register':
-                    let msg = register(request, response);
-                    console.log(msg);
-                    response.writeHead(200, {'Content-Type': 'application/json'});
-                    response.write(""+msg);
-                    response.end();
+                    register(request, response);
+                    
             }
     }
 });
