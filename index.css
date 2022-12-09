@@ -275,7 +275,6 @@ input {
   color: white;
   padding: 14px 20px;
   margin-top: 14%;
-  
   border: none;
   cursor: pointer;
   width: 100%;
@@ -423,4 +422,10 @@ b{
   color : white;
   margin-left: 7px;
   overflow-y: scroll;
+}
+
+canvas {
+  display: none;
+	margin: 0 auto;
+
 }

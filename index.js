@@ -72,6 +72,7 @@ function startgame() {
                         let msg = op + " has removed " + t + " elements from line " + c + "." + "<br>" + "<br>";
                         document.getElementById("movesMade").innerHTML = msg + document.getElementById("movesMade").innerHTML;
                     } 
+                    if(d.turn == usr) document.getElementById("nextTurnBtn").style.display = "block";
                     if('rack' in d)
                         for(i=0; i<rows; i++) numberRows()[i] = d.rack[i];
                     if('winner' in JSON.parse(event.data)){
@@ -152,6 +153,7 @@ async function endturn() {
         var temp = AllowedRow;
         temp++;
         if (opponent == "Player") {
+            document.getElementById("nextTurnBtn").style.display = "none";
             if(turn == 1)
                 var msg = usr + " has removed " + rmCount + " elements from line " + temp + "." + "<br>" + "<br>";
             else
@@ -312,8 +314,10 @@ function init(){
     btn.innerHTML = "End Game";
     $("#start").css({ "background-color": "brown" });
     inGame = 1;
-    let ntbtn = document.getElementById("nextTurnBtn");
-    ntbtn.style.display = "block";
+    if(opponent == "AI"){
+        let ntbtn = document.getElementById("nextTurnBtn");
+        ntbtn.style.display = "block";
+    }
 }
 
 function waiting(){
