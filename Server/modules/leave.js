@@ -44,6 +44,10 @@ module.exports = leave = (request, response) => {
                                     if(i.turn == query.nick) i.winner = i.next;
                                     else i.winner = i.turn;
                                     console.log("Desistiu");
+                                    fs.writeFile("db.json", JSON.stringify(json), (err => {
+                                        if(err) throw err;
+                                        console.log("data written to file");
+                                        }));
                                 }
                             });
                             if(!inGame){ // Caso o jogo não exista
@@ -59,10 +63,6 @@ module.exports = leave = (request, response) => {
                             }
                         }
                     });
-                    response.writeHead(200, {'Content-Type': 'application/json'});
-                                response.write('{}');
-                                response.end();
-                                return;
                 }
                }catch(err) {console.log}
         })

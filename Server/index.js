@@ -7,6 +7,7 @@ const ranking = require ("./modules/ranking")
 const join = require ("./modules/join");
 const update = require("./modules/update");
 const leave = require("./modules/leave");
+const notify = require("./modules/notify");
 
 
 const server = http.createServer( (request, response)  => {
@@ -27,6 +28,9 @@ const server = http.createServer( (request, response)  => {
                     break;
                 case '/leave':
                     leave(request, response);
+                    break;
+                case '/notify':
+                    notify(request, response);
                     break;
             }
             break;
