@@ -1,3 +1,1 @@
-{
-    "user" : [{"nick":"jaime", "pass":"seguro"}]
-}
+{"user":[{"nick":"jaime2","pass":"8060daf308dfb7b0862f28df17357dbb"}],"classifications":[{"hash":"d556c84d53742edd467ac3360fb58af8","ranking":[{"nick":"jaime","victories":3,"games":4},{"nick":"leo","victories":0,"games":4}]}],"joining":[{"game":"d556c84d53742edd467ac3360fb58af8","first":{"nick":"jaime","size":4}},{"game":"85c60cf8bb218f1b634fb55954357d44","first":{"nick":"jaime","size":5}}]}

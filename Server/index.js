@@ -3,6 +3,8 @@ const fs =     require ("fs");
 const url =    require ("url");
 const crypto = require ("crypto");
 const register = require ("./modules/register")
+const ranking = require ("./modules/ranking")
+const join = require ("./modules/join")
 
 const server = http.createServer( (request, response)  => {
     const preq = url.parse(request.url,true);
@@ -13,7 +15,13 @@ const server = http.createServer( (request, response)  => {
             switch(pathname){
                 case '/register':
                     register(request, response);
-                    
+                    break;
+                case '/ranking':
+                    ranking(request, response);
+                    break;
+                case '/join':
+                    join(request, response);
+                    break;
             }
     }
 });
