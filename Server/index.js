@@ -6,6 +6,7 @@ const register = require ("./modules/register")
 const ranking = require ("./modules/ranking")
 const join = require ("./modules/join");
 const update = require("./modules/update");
+const leave = require("./modules/leave");
 
 
 const server = http.createServer( (request, response)  => {
@@ -23,6 +24,9 @@ const server = http.createServer( (request, response)  => {
                     break;
                 case '/join':
                     join(request, response);
+                    break;
+                case '/leave':
+                    leave(request, response);
                     break;
             }
             break;
