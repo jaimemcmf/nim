@@ -23,9 +23,9 @@ module.exports = leave = (request, response) => {
                         let hash = crypto.createHash('md5').update(query.password).digest('hex');
                         const users = json.user;
                         users.forEach(i => {
-                            console.log(i.nick + "  " + i.pass);
+                            console.log(i.nick + "  " + i.password);
                             console.log(i);
-                            if(i.nick == query.nick && i.pass == hash){
+                            if(i.nick == query.nick && i.password == hash){
                                 exists = true;
                             } 
                         });

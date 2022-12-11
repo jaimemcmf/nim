@@ -47,8 +47,10 @@ module.exports = register = (request, response) => {
                             if(err) throw err;
                             console.log("data written to file");
                             }));
+                        
                         response.writeHead(200, {'Content-Type': 'application/json'});
                         response.write("{}");
+                        console.log(response);
                         response.end();
                         return; 
                     }

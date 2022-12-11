@@ -33,7 +33,7 @@ module.exports = ranking = (request, response) => {
                                 for(j=1; j<=query.size; j++) rack[j-1] = j;
                                 json['paired'].push({"game":hash, "size":query.size, "changed":1, "turn":i.nick, "next":query.nick, "rack":rack, "win":false});
                                 delete json.joining[index];
-                                json.joining.splice(index, index);
+                                json.joining.splice(index, 1);
                                 fs.writeFile("db.json", JSON.stringify(json), (err => {
                                     if(err) throw err;
                                     console.log("data written to file");

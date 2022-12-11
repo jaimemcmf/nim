@@ -20,7 +20,7 @@ module.exports = notify = (request, response) => {
                     let hash = crypto.createHash('md5').update(query.password).digest('hex');
                     const users = json.user;
                     users.forEach(i => {
-                        if(i.nick == query.nick && i.pass == hash) exists = true;
+                        if(i.nick == query.nick && i.password == hash) exists = true;
                     });
                     if(!exists){
                         response.writeHead(401, {'Content-Type': 'application/json'});
