@@ -41,8 +41,12 @@ module.exports = leave = (request, response) => {
                                 if(i.game == query.game){
                                     inGame = true;
                                     i.win = true;
-                                    if(i.turn == query.nick) i.winner = i.next;
-                                    else i.winner = i.turn;
+                                    if(i.turn != query.nick){
+                                        let temp = i.turn;
+                                        i.turn = i.next;
+                                        i.next = temp;
+                                    }
+                                    i.changed = 1;
                                     console.log("Desistiu");
                                     fs.writeFile("db.json", JSON.stringify(json), (err => {
                                         if(err) throw err;

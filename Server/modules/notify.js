@@ -47,6 +47,7 @@ module.exports = notify = (request, response) => {
                                     i.rack[query.stack] = query.pieces;
                                     i.pieces = query.pieces;
                                     i.stack = query.stack;
+                                    i.changed = 1;
                                     fs.writeFile("db.json", JSON.stringify(json), (err => {
                                         if(err) throw err;
                                         console.log("data written to file");

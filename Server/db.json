@@ -1,1 +1,24 @@
-{"user":[{"nick":"jaime","pass":"8060daf308dfb7b0862f28df17357dbb"},{"nick":"leo","pass":"8060daf308dfb7b0862f28df17357dbb"}],"classifications":[{"hash":"d556c84d53742edd467ac3360fb58af8","ranking":[{"nick":"jaime","victories":3,"games":4},{"nick":"leo","victories":0,"games":4}]}],"joining":[{"game":"d556c84d53742edd467ac3360fb58af8","first":{"nick":"jaime","size":4}},{"game":"85c60cf8bb218f1b634fb55954357d44","first":{"nick":"jaime","size":5}}],"paired":[{"game":"d556c84d53742edd467ac3360fb58af8","size":4,"turn":"jaime","next":"leo","rack":[0,2,0,0],"pieces":0,"stack":3,"win":true,"winner":"jaime"}]}
+{
+  "user": [
+    { "nick": "jaime", "pass": "8060daf308dfb7b0862f28df17357dbb" },
+    { "nick": "leo", "pass": "8060daf308dfb7b0862f28df17357dbb" }
+  ],
+  "classifications": [
+    {
+      "hash": "d556c84d53742edd467ac3360fb58af8",
+      "ranking": [
+        { "nick": "jaime", "victories": 3, "games": 4 },
+        { "nick": "leo", "victories": 0, "games": 4 }
+      ]
+    },
+    {
+      "hash": "85c60cf8bb218f1b634fb55954357d44",
+      "ranking": [
+        { "nick": "jaime", "victories": 2, "games": 2 },
+        { "nick": "leo", "victories": 0, "games": 2 }
+      ]
+    }
+  ],
+  "joining": [{ "game": "210d4f3895bdd2af8b2d0254eb026995", "nick": "jaime" }],
+  "paired": [null]
+}
