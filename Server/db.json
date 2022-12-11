@@ -7,8 +7,8 @@
     {
       "hash": "d556c84d53742edd467ac3360fb58af8",
       "ranking": [
-        { "nick": "jaime", "victories": 5, "games": 6 },
-        { "nick": "leo", "victories": 1, "games": 6 }
+        { "nick": "jaime", "victories": 6, "games": 6 },
+        { "nick": "leo", "victories": 0, "games": 6 }
       ]
     },
     {
@@ -20,5 +20,15 @@
     }
   ],
   "joining": [],
-  "paired": []
+  "paired": [
+    {
+      "game": "d556c84d53742edd467ac3360fb58af8",
+      "size": 4,
+      "changed": 0,
+      "turn": "jaime",
+      "next": "leo",
+      "rack": [1, 2, 3, 4],
+      "win": false
+    }
+  ]
 }

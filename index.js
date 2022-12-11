@@ -98,7 +98,7 @@ function startgame() {
                     
                 }
             })
-            .catch(e => console.log("error"))
+            .catch(e => console.log("AQUI " + e))
         }
     } else {
         if(opponent == "Player"){

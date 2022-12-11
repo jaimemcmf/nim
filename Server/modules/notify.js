@@ -1,5 +1,9 @@
 const fs = require('fs');
 const crypto = require('crypto');
+const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
+    'Content-Type': "application/json"}
 module.exports = notify = (request, response) => {
     let body = "";
     request
@@ -8,7 +12,7 @@ module.exports = notify = (request, response) => {
         try {
             query = JSON.parse(body);
             if(query.nick == 'undefined' || query.password == 'undefined' || query.game == 'undefined' || query.stack =='undefined' || query.pieces == 'undefined'){
-                response.writeHead(400, {'Content-Type': 'application/json'});
+                response.writeHead(400, headers);
                 response.write('{"error": "One of the request fields is undefined"}');
                 response.end();
                 return;
@@ -23,7 +27,7 @@ module.exports = notify = (request, response) => {
                         if(i.nick == query.nick && i.password == hash) exists = true;
                     });
                     if(!exists){
-                        response.writeHead(401, {'Content-Type': 'application/json'});
+                        response.writeHead(401, headers);
                         response.write('{"error": "User registered with a different password"}');
                         response.end();
                         return;
@@ -35,7 +39,7 @@ module.exports = notify = (request, response) => {
                             if(i.game == query.game && i.turn == query.nick){
                                 valid = true;
                                 if(query.stack < 0 || query.stack >= i.size || query.pieces >= i.rack[query.stack] || query.pieces < 0){
-                                    response.writeHead(401, {'Content-Type': 'application/json'});
+                                    response.writeHead(401, headers);
                                     response.write('{ "error": "invalid number of pieces" }');
                                     response.end();
                                     flag = true;
@@ -56,12 +60,12 @@ module.exports = notify = (request, response) => {
                             }
                         });
                         if(!valid && !flag){
-                            response.writeHead(401, {'Content-Type': 'application/json'});
+                            response.writeHead(401, headers);
                             response.write('{"error": "played in wrong turn or not a paired game"}');
                             response.end();
                             return;
                         }else if(valid && !flag){
-                            response.writeHead(200, {'Content-Type': 'application/json'});
+                            response.writeHead(200, headers);
                             response.write('{}');
                             response.end();
                             return;

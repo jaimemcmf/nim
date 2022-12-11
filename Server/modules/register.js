@@ -1,6 +1,10 @@
 const crypto = require ("crypto")
 const fs = require ("fs");
 var message = '{}';
+const headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
+        'Content-Type': "application/json"}
 module.exports = register = (request, response) => {
     let body = "";
     request
@@ -9,7 +13,7 @@ module.exports = register = (request, response) => {
            try {
               query = JSON.parse(body);
               if( query.nick == 'undefined' || query.password == 'undefined' || typeof query.nick != "string" || typeof query.password != "string") {
-                response.writeHead(400, {'Content-Type': 'application/json'});
+                response.writeHead(400, headers);
                 response.write('{"error": "User or password is not defined"}');
                 response.end();
                 return;
@@ -27,19 +31,19 @@ module.exports = register = (request, response) => {
                         console.log(i.nick + "  " + i.password);
                         console.log(i);
                         if(i.nick == query.nick && i.password != hash){
-                            response.writeHead(401, {'Content-Type': 'application/json'});
+                            response.writeHead(401, headers);
                             response.write('{"error": "User registered with a different password"}');
                             response.end();
                             exists = true;
                             return;
-                        } 
+                        }
                         else if(i.nick == query.nick && i.password == hash){
-                            response.writeHead(200, {'Content-Type': 'application/json'});
+                            response.writeHead(200, headers);
                             response.write('{}');
                             response.end();
                             exists = true;
                             return;
-                        } 
+                        }
                     });
                     if(!exists){
                         json["user"].push({"nick":query.nick,"password":hash});
@@ -47,12 +51,12 @@ module.exports = register = (request, response) => {
                             if(err) throw err;
                             console.log("data written to file");
                             }));
-                        
-                        response.writeHead(200, {'Content-Type': 'application/json'});
+
+                        response.writeHead(200, headers);
                         response.write("{}");
                         console.log(response);
                         response.end();
-                        return; 
+                        return;
                     }
                     response.end();
                     return;

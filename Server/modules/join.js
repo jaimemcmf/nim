@@ -1,5 +1,9 @@
 const crypto = require ("crypto")
 const fs = require ("fs");
+const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
+    'Content-Type': "application/json"}
 
 module.exports = ranking = (request, response) => {
     let body = "";
@@ -9,12 +13,12 @@ module.exports = ranking = (request, response) => {
             try {
                 query = JSON.parse(body);
                 if( query.group == 'undefined' || query.nick == 'undefined' || query.password == 'undefined' || query.size == 'undefined') {
-                    response.writeHead(400, {'Content-Type': 'application/json'});
+                    response.writeHead(400, headers);
                     response.write('{"error": "One of the request fields is undefined"}');
                     response.end();
                     return;
                }else if(typeof query.group != 'number' || typeof query.nick != 'string' || typeof query.password != 'string' || typeof query.size != 'number'){
-                    response.writeHead(400, {'Content-Type': 'application/json'});
+                    response.writeHead(400, headers);
                     response.write('{"error": "One of the reqquest fields is invalid"}');
                     response.end();
                     return;
@@ -39,8 +43,8 @@ module.exports = ranking = (request, response) => {
                                     console.log("data written to file");
                                 }));
                                 
-                                response.writeHead(200, {'Content-Type': 'application/json'});
-                                response.write('{"game": ' + hash + '}');
+                                response.writeHead(200, headers);
+                                response.write('{\"game\": \"' + hash + '\"}');
                                 response.end();
                                 return;
                             }
@@ -52,8 +56,8 @@ module.exports = ranking = (request, response) => {
                             if(err) throw err;
                             console.log("data written to file");
                             }));
-                            response.writeHead(200, {'Content-Type': 'application/json'});
-                            response.write('{"game": ' + hash + '}');
+                            response.writeHead(200, headers);
+                            response.write('{\"game\": \"' + hash + '\"}');
                             response.end();
                             return; 
                         }

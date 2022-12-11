@@ -1,7 +1,7 @@
 var usr, pass, opp;
 var game;
-var url2 = 'http://localhost:8005/';
-var url = 'http://twserver.alunos.dcc.fc.up.pt:8008/';
+var url = 'http://localhost:8005/';
+var url2 = 'http://twserver.alunos.dcc.fc.up.pt:8008/';
 
 async function register(url = '', data = {}) {
     const response = await fetch(url, {
@@ -10,7 +10,7 @@ async function register(url = '', data = {}) {
       cache: 'no-cache', 
       credentials: 'same-origin', 
       headers: {
-        'Content-Type': 'application/json',
+        //'Content-Type': 'application/json',
         
       },
       redirect: 'follow', 
@@ -28,13 +28,14 @@ async function register(url = '', data = {}) {
       cache: 'no-cache',
       credentials: 'same-origin',
       headers: {
-        'Content-Type': 'application/json'
+        //'Content-Type': 'application/json'
        
       },
       redirect: 'follow', 
       referrerPolicy: 'no-referrer', 
       body: JSON.stringify(data) 
     });
+    console.log(response)
     return response.json(); 
   }
 
@@ -45,7 +46,7 @@ async function register(url = '', data = {}) {
       cache: 'no-cache', 
       credentials: 'same-origin', 
       headers: {
-        'Content-Type': 'application/json'
+        //'Content-Type': 'application/json'
         
       },
       redirect: 'follow', 
@@ -62,7 +63,7 @@ async function register(url = '', data = {}) {
       cache: 'no-cache', 
       credentials: 'same-origin', 
       headers: {
-        'Content-Type': 'application/json'
+        //'Content-Type': 'application/json'
         
       },
       redirect: 'follow', 
@@ -78,7 +79,7 @@ async function register(url = '', data = {}) {
       cache: 'no-cache', 
       credentials: 'same-origin',
       headers: {
-        'Content-Type': 'application/json'
+        //'Content-Type': 'application/json'
        
       },
       redirect: 'follow', 
@@ -150,11 +151,13 @@ function joinGame(){
             .then((data)  => {
               if('error' in data)reject();
               else {
+                console.log("DATA " + data);
                 game = data.game;
                 resolve();
               }
             })
             .catch((e) => {
+              console.log(e);
               reject();
             })
            }, 750);

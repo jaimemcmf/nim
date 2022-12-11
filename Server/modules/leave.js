@@ -1,5 +1,9 @@
 const fs = require('fs');
 const crypto = require('crypto');
+const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
+    'Content-Type': "application/json"}
 
 module.exports = leave = (request, response) => {
     let body = '';
@@ -10,7 +14,7 @@ module.exports = leave = (request, response) => {
                try{
                 query = JSON.parse(body);
                 if(query.nick == 'undefined' || query.password == 'undefined' || query.game == 'undefined'){
-                    response.writeHead(400, {'Content-Type': 'application/json'});
+                    response.writeHead(400, headers);
                     response.write('{"error": "One of the request fields is undefined"}');
                     response.end();
                     return;
@@ -30,7 +34,7 @@ module.exports = leave = (request, response) => {
                             } 
                         });
                         if(!exists){ // Caso utilizador não exista ou as credenciais estejam mal
-                            response.writeHead(401, {'Content-Type': 'application/json'});
+                            response.writeHead(401, headers);
                             response.write('{"error": "User registered with a different password"}');
                             response.end();
                             return;
@@ -55,12 +59,12 @@ module.exports = leave = (request, response) => {
                                 }
                             });
                             if(!inGame){ // Caso o jogo não exista
-                                response.writeHead(401, {'Content-Type': 'application/json'});
+                                response.writeHead(401, headers);
                                 response.write('{"error": "Not In Game"}');
                                 response.end();
                                 return;
                             }else{
-                                response.writeHead(200, {'Content-Type': 'application/json'});
+                                response.writeHead(200, headers);
                                 response.write('{}');
                                 response.end();
                                 return;

@@ -50,7 +50,11 @@ const server = http.createServer( (request, response)  => {
                 response.write("{}");
                 response.end();
                 break;
-            }   
+            }  
+        case 'OPTIONS':
+            response.writeHead(200,{'Content-Type': 'application/json', 'Access-Control-Allow-Origin':'*', 'Access-Control-Allow-Methods':'OPTIONS, POST, GET'});
+            response.end();
+            break; 
         default:
             response.writeHead(404);
             response.write("{}");
