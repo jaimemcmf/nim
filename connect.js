@@ -1,7 +1,8 @@
 /////////////////////////////////////////////////////////// FETCH REQUESTS ///////////////////////////////////////////////////////////////////
 var usr, pass, opp;
 var game;
-
+var url = 'http://localhost:8005/';
+var url2 = 'http://twserver.alunos.dcc.fc.up.pt:8008/';
 
 async function register(url = '', data = {}) {
     const response = await fetch(url, {
@@ -17,6 +18,7 @@ async function register(url = '', data = {}) {
       referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
       body: JSON.stringify(data) // body data type must match "Content-Type" header
     });
+    console.log(response);
     return response.json(); // parses JSON response into native JavaScript objects
   }
 
@@ -97,7 +99,7 @@ async function register(url = '', data = {}) {
     if(pass1 != pass2 || usr == "" || pass1 == "" || pass2 == ""){
         console.log("register error");
     }else{
-        register('http://twserver.alunos.dcc.fc.up.pt:8008/register', { nick:usr, password:pass1 })
+        register(url + 'register', { nick:usr, password:pass1 })
         .then((data) => {
             if(!('error' in data)) {
                 closesignupform();
@@ -120,7 +122,7 @@ async function register(url = '', data = {}) {
   function loginClick(){
     usr = document.getElementById("uname1").value;
     pass = document.getElementById("psw1").value;
-        register('http://twserver.alunos.dcc.fc.up.pt:8008/register', { nick:usr, password:pass })
+        register(url + 'register', { nick:usr, password:pass })
         .then((data) => {
         if(!('error' in data)) {
             closeform();
@@ -147,7 +149,7 @@ function joinGame(){
         let size = rows;
         return new Promise((resolve, reject) => {
           setTimeout(() => {
-            join('http://twserver.alunos.dcc.fc.up.pt:8008/join', { nick:usr, password:pass, group:5, size:size})
+            join(url + 'join', { nick:usr, password:pass, group:5, size:size})
             .then((data)  => {
               if('error' in data)reject();
               else {
@@ -164,7 +166,7 @@ function joinGame(){
 
 function notifyPlay(stack, pieces){
   //console.log("notify play  connect" + stack + " " + pieces);
-  notify('http://twserver.alunos.dcc.fc.up.pt:8008/notify', { nick:usr, password:pass, game:game, stack:stack, pieces: pieces})
+  notify(url + 'notify', { nick:usr, password:pass, game:game, stack:stack, pieces: pieces})
   .then((data) => {
     if('error' in data){
       console.log(data.error);
@@ -176,7 +178,7 @@ function notifyPlay(stack, pieces){
 }
 
 function leaveGame(){
-  leave('http://twserver.alunos.dcc.fc.up.pt:8008/leave', { nick:usr, password:pass, game:game})
+  leave(url + 'leave', { nick:usr, password:pass, game:game})
   .then((data) => {
     if('error' in data){
       console.log(data.error);
@@ -188,7 +190,7 @@ function leaveGame(){
 function getRanking(){
   let classi = "";
   let size = rows;
-  ranking('http://twserver.alunos.dcc.fc.up.pt:8008/ranking', { group:5, size:size})
+  ranking(url + 'ranking', { group:5, size:size})
   .then((data) => {
     if('ranking' in data){
       for(let i=0; i<data.ranking.length; i++){

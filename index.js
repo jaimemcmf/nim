@@ -59,7 +59,7 @@ function startgame() {
             .then(() => {
                 waiting();
                 console.log(game);
-                var update = new EventSource("http://twserver.alunos.dcc.fc.up.pt:8008/update?nick="+usr+"&game="+game);
+                var update = new EventSource(url + "update?nick="+usr+"&game="+game);
                 update.onmessage = function(event) {
                     console.log(event);
                     let d = JSON.parse(event.data);

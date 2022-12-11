@@ -32,14 +32,31 @@ const server = http.createServer( (request, response)  => {
                 case '/notify':
                     notify(request, response);
                     break;
+                default:
+                    response.writeHead(404);
+                    response.write("{}");
+                    response.end();
+                    break;
             }
             break;
         case 'GET':
             if(request.headers.accept && request.headers.accept == 'text/event-stream'){
                 if('/update' == pathname){
                     update(request, response);
+                    break;
                 }
-            }    
+            }else{
+                response.writeHead(404);
+                response.write("{}");
+                response.end();
+                break;
+            }   
+        default:
+            response.writeHead(404);
+            response.write("{}");
+            response.end();
+            break;
+
     }
 });
 server.listen(8005);
