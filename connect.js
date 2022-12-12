@@ -1,7 +1,7 @@
 var usr, pass, opp;
 var game;
-var url = 'http://localhost:8005/';
-var url2 = 'http://twserver.alunos.dcc.fc.up.pt:8008/';
+var url2 = 'http://localhost:8005/';
+var url = 'http://twserver.alunos.dcc.fc.up.pt:8008/';
 
 async function register(url = '', data = {}) {
     const response = await fetch(url, {
@@ -67,7 +67,8 @@ async function register(url = '', data = {}) {
         
       },
       redirect: 'follow', 
-      referrerPolicy: 'no-referrer', 
+      referrerPolicy: 'no-referrer',
+      body: JSON.stringify(data) 
     });
     return response.json(); 
   }
@@ -171,13 +172,14 @@ function notifyPlay(stack, pieces){
     if('error' in data){
       console.log(data.error);
     }else{
-      console.log(data);
+      console.log("DATA: " + data);
     }
   })
-  .catch(e => console.log(e));
+  .catch(e => console.log("ERRO"+e));
 }
 
 function leaveGame(){
+  console.log("PASS " + pass);
   leave(url + 'leave', { nick:usr, password:pass, game:game})
   .then((data) => {
     if('error' in data){

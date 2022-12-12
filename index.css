@@ -423,9 +423,3 @@ b{
   margin-left: 7px;
   overflow-y: scroll;
 }
-
-canvas {
-  display: none;
-	margin: 0 auto;
-
-}

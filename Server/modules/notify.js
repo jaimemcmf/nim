@@ -3,14 +3,23 @@ const crypto = require('crypto');
 const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
-    'Content-Type': "application/json"}
+    'Content-Type': "application/json"
+}
 module.exports = notify = (request, response) => {
     let body = "";
+    console.log(request);
     request
     .on('data', (chunk) => { body += chunk;  })
     .on('end', () => {
+        console.log("BODY2" + body);
         try {
             query = JSON.parse(body);
+            console.log("NOTIFY  " + query);
+            let nickvar = query.nick;
+            let passvar = query.password;
+            let gamevar = query.game;
+            let stackvar = query.stack;
+            let piecesvar = query.pieces;
             if(query.nick == 'undefined' || query.password == 'undefined' || query.game == 'undefined' || query.stack =='undefined' || query.pieces == 'undefined'){
                 response.writeHead(400, headers);
                 response.write('{"error": "One of the request fields is undefined"}');
@@ -21,10 +30,10 @@ module.exports = notify = (request, response) => {
                     if(err)  throw err;
                     let json = JSON.parse(data);
                     let exists = false;
-                    let hash = crypto.createHash('md5').update(query.password).digest('hex');
+                    let hash = crypto.createHash('md5').update(passvar).digest('hex');
                     const users = json.user;
                     users.forEach(i => {
-                        if(i.nick == query.nick && i.password == hash) exists = true;
+                        if(i.nick == nickvar && i.password == hash) exists = true;
                     });
                     if(!exists){
                         response.writeHead(401, headers);
@@ -36,9 +45,9 @@ module.exports = notify = (request, response) => {
                         let flag = false;
                         let games = json.paired;
                         games.forEach(i => {
-                            if(i.game == query.game && i.turn == query.nick){
+                            if(i.game == gamevar && i.turn == nickvar){
                                 valid = true;
-                                if(query.stack < 0 || query.stack >= i.size || query.pieces >= i.rack[query.stack] || query.pieces < 0){
+                                if(stackvar < 0 || stackvar >= i.size || piecesvar >= i.rack[stackvar] || piecesvar < 0){
                                     response.writeHead(401, headers);
                                     response.write('{ "error": "invalid number of pieces" }');
                                     response.end();
@@ -48,10 +57,9 @@ module.exports = notify = (request, response) => {
                                     let temp = i.turn;
                                     i.turn = i.next;
                                     i.next = temp;
-                                    i.rack[query.stack] = query.pieces;
-                                    i.pieces = query.pieces;
-                                    i.stack = query.stack;
+                                    i.rack[stackvar] = piecesvar;
                                     i.changed = 1;
+                                    i.changed2 = 1;
                                     fs.writeFile("db.json", JSON.stringify(json), (err => {
                                         if(err) throw err;
                                         console.log("data written to file");

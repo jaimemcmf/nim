@@ -35,7 +35,7 @@ module.exports = ranking = (request, response) => {
                                 exists = true;
                                 let rack = [];
                                 for(j=1; j<=query.size; j++) rack[j-1] = j;
-                                json['paired'].push({"game":hash, "size":query.size, "changed":1, "turn":i.nick, "next":query.nick, "rack":rack, "win":false});
+                                json['paired'].push({"game":hash, "size":query.size, "first":i.nick, "changed":1, "changed2":1, "turn":i.nick, "next":query.nick, "rack":rack, "win":false});
                                 delete json.joining[index];
                                 json.joining.splice(index, 1);
                                 fs.writeFile("db.json", JSON.stringify(json), (err => {
@@ -64,7 +64,7 @@ module.exports = ranking = (request, response) => {
                     })
                 }
             }
-            catch(err) {  /* erros de JSON */ }
+            catch(err) {console.log(err)}
         })
         .on('error', (err) => { console.log(err.message); });
 }

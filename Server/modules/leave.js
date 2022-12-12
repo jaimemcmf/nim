@@ -3,7 +3,8 @@ const crypto = require('crypto');
 const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
-    'Content-Type': "application/json"}
+    'Content-Type': "application/json"
+}
 
 module.exports = leave = (request, response) => {
     let body = '';
@@ -11,9 +12,15 @@ module.exports = leave = (request, response) => {
         .on('data', (chunk) => { body += chunk;  })
         .on('end', () => {
             console.log("Entrie");
+            console.log(JSON.parse(body));
                try{
                 query = JSON.parse(body);
-                if(query.nick == 'undefined' || query.password == 'undefined' || query.game == 'undefined'){
+                console.log(query);
+                console.log("SERVER PASS" + typeof query.password)
+                let passvar = query.password;
+                let nickvar = query.nick;
+                let gamevar = query.game;
+                if(query.nick == 'undefined' || query.password == 'undefined' || query.game == 'undefined' || typeof query.password != typeof "string"){
                     response.writeHead(400, headers);
                     response.write('{"error": "One of the request fields is undefined"}');
                     response.end();
@@ -24,12 +31,13 @@ module.exports = leave = (request, response) => {
                         let json = JSON.parse(data);
                         console.log(json.user);
                         let exists = false;
-                        let hash = crypto.createHash('md5').update(query.password).digest('hex');
+                        const hash = crypto.createHash('md5').update(passvar).digest('hex');
+                        console.log("HASH   " + hash);
                         const users = json.user;
                         users.forEach(i => {
                             console.log(i.nick + "  " + i.password);
                             console.log(i);
-                            if(i.nick == query.nick && i.password == hash){
+                            if(i.nick == nickvar && i.password == hash){
                                 exists = true;
                             } 
                         });
@@ -42,15 +50,16 @@ module.exports = leave = (request, response) => {
                             let inGame = false;
                             let games = json.paired;
                             games.forEach(i => {
-                                if(i.game == query.game){
+                                if(i.game == gamevar){
                                     inGame = true;
                                     i.win = true;
-                                    if(i.turn != query.nick){
+                                    if(i.turn != nickvar){
                                         let temp = i.turn;
                                         i.turn = i.next;
                                         i.next = temp;
                                     }
                                     i.changed = 1;
+                                    i.changed2 = 1;
                                     console.log("Desistiu");
                                     fs.writeFile("db.json", JSON.stringify(json), (err => {
                                         if(err) throw err;

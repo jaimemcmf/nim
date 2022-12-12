@@ -19,10 +19,10 @@ function send(res, nick, game){
         if(err) throw err;
         let json = JSON.parse(data);
         let flag = false;
-        let rack, changed;
+        let rack, changed, changed2;
         let turn, next, win, winner;
         let pairedGame;
-        let index;
+        let index, first;
         let cont = 0;
         json.paired.forEach(i => {
             console.log("Entry => Game: " + i.game + " Turn: " + i.turn + " Next: " + i.next + " Rack "+  i.rack);
@@ -35,14 +35,22 @@ function send(res, nick, game){
                 win = i.win;
                 winner = i.next;
                 changed = i.changed;
+                changed2 = i.changed2;
+                first = i.first;
                 pairedGame = i;
                 index = cont;
             }
             cont++;
         });
-        console.log("Rack: " + rack + " turn: " + turn + " next: " + next + " changed: " + changed);
-        if(changed == 1){
-            pairedGame.changed = 0;
+        console.log("Rack: " + rack + " turn: " + turn + " next: " + next + " changed: " + changed + " changed2: " +  changed2 + "  winner: " + winner);
+        if((nick == first && changed2 == 1) || (nick != first && changed == 1) || win){
+            if(nick == first){
+                pairedGame.changed2 = 0;
+                changed2 = 0;
+            } else {
+                pairedGame.changed = 0;
+                changed = 0;
+            }
             let colSum = 0;
             rack.forEach(i => {
                 colSum += i;
@@ -58,12 +66,16 @@ function send(res, nick, game){
                         let p2 = false;
                         i.ranking.forEach(j => {
                             if(j.nick == winner){
-                                j.victories++;
-                                j.games++;
+                                j.victories = j.victories + 1;
+                                console.log("jgames antes:" + j.games);
+                                j.games = j.games + 1;
+                                console.log("jgames depois:" + j.games);
                                 p1 = true;
+                                console.log("entrei p1");
                             }else if(j.nick == turn){
-                                j.games++;
+                                j.games = j.games + 1;
                                 p2 = true;
+                                console.log("entrei p2");
                             }
                         });
                         if(!p1){
@@ -80,10 +92,12 @@ function send(res, nick, game){
                 }
                 delete json.paired[index];
                 json.paired.splice(index, 1);
-                fs.writeFile("db.json", JSON.stringify(json), (err => {
-                    if(err) throw err;
-                    console.log("data written to file");
-                }));
+                if(changed == 0 && changed2 == 0){
+                    fs.writeFile("db.json", JSON.stringify(json), (err => {
+                        if(err) throw err;
+                        console.log("data written to file");
+                    }));
+                }
                 body = {winner:winner};
                 res.write("data: " + JSON.stringify(body) + "\n\n");
                 res.end();

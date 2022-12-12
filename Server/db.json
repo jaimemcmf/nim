@@ -1,14 +1,15 @@
 {
   "user": [
     { "nick": "jaime", "password": "8060daf308dfb7b0862f28df17357dbb" },
-    { "nick": "leo", "password": "8060daf308dfb7b0862f28df17357dbb" }
+    { "nick": "leo", "password": "8060daf308dfb7b0862f28df17357dbb" },
+    { "nick": "iuri", "password": "8060daf308dfb7b0862f28df17357dbb" }
   ],
   "classifications": [
     {
       "hash": "d556c84d53742edd467ac3360fb58af8",
       "ranking": [
-        { "nick": "jaime", "victories": 6, "games": 6 },
-        { "nick": "leo", "victories": 0, "games": 6 }
+        { "nick": "jaime", "victories": 8, "games": 9 },
+        { "nick": "leo", "victories": 1, "games": 9 }
       ]
     },
     {
@@ -24,10 +25,12 @@
     {
       "game": "d556c84d53742edd467ac3360fb58af8",
       "size": 4,
-      "changed": 0,
+      "first": "jaime",
+      "changed": 1,
+      "changed2": 1,
       "turn": "jaime",
       "next": "leo",
-      "rack": [1, 2, 3, 4],
+      "rack": [0, 0, 0, 0],
       "win": false
     }
   ]
