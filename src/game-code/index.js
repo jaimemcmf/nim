@@ -287,7 +287,10 @@ function showClassifications() {
 function updateClassifications() {
     getRanking();
     if (typeof(Storage) !== "undefined") {
+        
         document.getElementById("aiscore").innerHTML = localStorage.ai;
+        document.getElementById("aiscore").innerHTML = "0";
+        
         document.getElementById("playerAIscore").innerHTML = localStorage.usr;
         if(usr != undefined){
             document.getElementById("player_name").innerHTML = usr;

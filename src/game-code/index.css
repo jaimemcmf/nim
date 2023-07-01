@@ -22,8 +22,8 @@ a:hover {
   text-decoration: none;
 }
 
-body{
-   background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)), url("por_do_sol.jpg");
+body {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)), url("../etc/background.jpg");
   background-size:cover;
   height: 100%;
 }
@@ -108,7 +108,6 @@ html {
 #messagesdiv::-webkit-scrollbar {
   display: none;  
 }
-
 
 .game_window {
   width: 50%;
